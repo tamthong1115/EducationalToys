@@ -8,6 +8,7 @@ import Layout from "./layouts/Layout";
 // pages
 import Home from "./pages/Home/Home";
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import Dashboard from "./components/Dashboard/Dashboard";
 
 
 function App() {
@@ -20,6 +21,12 @@ function App() {
             <Layout>
               <Home />
             </Layout>
+          }
+        />
+        <Route
+          path="/dashboard"
+          element={
+              <Dashboard/>
           }
         />
       </Routes>
