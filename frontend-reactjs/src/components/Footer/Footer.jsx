@@ -7,7 +7,7 @@ import { FaRegHeart } from 'react-icons/fa'
 function Footer() {
     return (
         <footer className={footerStyles['footer']}>
-            <div className="container">
+            <div className="container hidden md:block">
                 <div className={footerStyles['footer__trust-pilot']}>
                     <img
                         src={TrustPilot}
