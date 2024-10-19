@@ -1,0 +1,8 @@
+& .ant-input {
+    height: 70px;
+}
+
+& .ant-input-search-button {
+    height: 70px !important ;
+    width: 70px !important;
+}
