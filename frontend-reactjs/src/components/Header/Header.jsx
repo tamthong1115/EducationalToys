@@ -8,6 +8,7 @@ import { useState } from 'react'
 import Login from './Login'
 import Register from './Register'
 import ForgetPassword from './ForgetPassword'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
     // const [isOpen, setIsOpen] = useState(false)
@@ -68,18 +69,22 @@ const Header = () => {
                     />
                     <div className="flex flex-col md:flex-row gap-4 items-center space-x-4">
                         <span className="text-gray-700">
-                            Get in touch: care@educationaltoys.co.uk
+                            <div className=''> Get in touch: care@educationaltoys.co.uk</div>
+                            <Link to="/aboutUs" className='text-[#000] border-1px border-solid underline hover:italic'>About Us ?</Link>
                         </span>
-                        <div>
+                        <div className=''>Hello</div>
+                        <div className='flex items-center'>
+                             {/* About us*/}
+                            
                             <button
-                                className="mr-[10px] text-[18px] hover:italic hover:underline font-[400]"
+                                className="mr-[10px] text-[10px] hover:italic hover:underline bg-[#757FE2] p-[8px] rounded-[10px] font-[400] h-[42px] inline-flex"
                                 id="button-login"
                                 onClick={handleLogin}
                             >
                                 Log In
                             </button>
                             <button
-                                className="text-[18px] hover:italic hover:underline bg-[#757FE2] p-[8px] rounded-[10px] font-[400]"
+                                className="text-[18px] hover:italic hover:underline bg-[#757FE2] p-[8px] rounded-[10px] font-[400] h-[42px]"
                                 onClick={handleRegister}
                             >
                                 Register
