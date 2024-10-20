@@ -29,13 +29,11 @@ public class Category {
     @JoinColumn(name = "parent_id")
     private Category parent;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")
-    private Instant createdAt;
+    private Instant createdAt = Instant.now();
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "updated_at")
-    private Instant updatedAt;
+    private Instant updatedAt = Instant.now();
 
     @Column(name = "deleted_at")
     private Instant deletedAt;

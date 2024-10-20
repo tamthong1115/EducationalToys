@@ -1,4 +1,4 @@
-package com.toyapp.backend.controller.user;
+package com.toyapp.backend.controller;
 
 
 import com.toyapp.backend.dto.auth.JwtResponse;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthenticationController {
     private final JwtService jwtService;
 
