@@ -1,6 +1,5 @@
-package com.toyapp.backend.dto;
+package com.toyapp.backend.dto.category;
 
-import com.toyapp.backend.model.Category;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,16 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDTO {
+public class CreateCategoryDTO {
 
-        private Long id;
         private String name;
         private String description;
         private Long parentId;
-
-        public CategoryDTO(String name) {
-            this.name = name;
-        }
 
 
 }

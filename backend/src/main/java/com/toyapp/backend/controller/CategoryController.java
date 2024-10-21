@@ -1,6 +1,6 @@
 package com.toyapp.backend.controller;
 
-import com.toyapp.backend.dto.CategoryDTO;
+import com.toyapp.backend.dto.category.CategoryDTO;
 import com.toyapp.backend.service.CategoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

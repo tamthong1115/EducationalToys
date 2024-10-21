@@ -1,11 +1,11 @@
 package com.toyapp.backend.controller.admin;
 
-import com.toyapp.backend.dto.CategoryDTO;
+import com.toyapp.backend.dto.category.CategoryDTO;
+import com.toyapp.backend.dto.category.CreateCategoryDTO;
 import com.toyapp.backend.service.CategoryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -20,8 +20,8 @@ public class AdminCategoryController extends BaseAdminController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CategoryDTO categoryDTO) {
-        return ResponseEntity.ok(categoryService.createCategory(categoryDTO));
+    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CreateCategoryDTO createCategoryDTO) {
+        return ResponseEntity.ok(categoryService.createCategory(createCategoryDTO));
     }
 
     @PutMapping
@@ -35,4 +35,6 @@ public class AdminCategoryController extends BaseAdminController {
         categoryService.deleteCategory(id);
         return ResponseEntity.noContent().build();
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.toyapp.backend.service;
 
-import com.toyapp.backend.dto.CategoryDTO;
+import com.toyapp.backend.dto.category.CategoryDTO;
+import com.toyapp.backend.dto.category.CreateCategoryDTO;
 import com.toyapp.backend.model.Category;
 import com.toyapp.backend.repository.CategoryRepository;
 import lombok.Getter;
@@ -31,8 +32,8 @@ public class CategoryService {
                 .map(this::convertToDTO);
     }
 
-    public CategoryDTO createCategory(CategoryDTO categoryDTO) {
-        Category category = convertToEntity(categoryDTO);
+    public CategoryDTO createCategory(CreateCategoryDTO createCategoryDTO) {
+        Category category = convertToEntity(createCategoryDTO);
         category = categoryRepository.save(category);
         return convertToDTO(category);
     }
@@ -53,6 +54,10 @@ public class CategoryService {
     
     private CategoryDTO convertToDTO(Category category){
         return new CategoryDTO(category.getId(), category.getName(), category.getDescription(), category.getParentId());
+    }
+
+    private Category convertToEntity(CreateCategoryDTO createCategoryDTO) {
+        return new Category(null, createCategoryDTO.getName(), createCategoryDTO.getDescription(), createCategoryDTO.getParentId());
     }
 
     private Category convertToEntity(CategoryDTO categoryDTO) {
