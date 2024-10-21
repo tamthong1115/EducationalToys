@@ -3,8 +3,8 @@ services:
     container_name: postgres_container_toys
     image: postgres:17
     environment:
-      POSTGRES_USER: ${POSTGRES_USER:-postgres}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-Password!1}
       PGDATA: /data/postgres
     volumes:
        - postgres_toys:/data/postgres
