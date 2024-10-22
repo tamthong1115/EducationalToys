@@ -7,13 +7,13 @@ import {
 import Layout from './layouts/Layout'
 
 import Home from "./pages/Home/Home";
-import Home1 from "./pages/Home/Home1";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import SearchList from './components/SearchList/SearchList'
 
 
 import { AboutUs } from './components/AboutUs/AboutUs'
+import ToysDetailsPage from './components/ToysDetail/ToysDetailsPage';
 
 function App() {
 
@@ -37,7 +37,7 @@ function App() {
                     }
                 />
                 <Route path="/toydetail/1" element={
-          <Home1/>}/>
+          <ToysDetailsPage/>}/>
                       
                 <Route
                     path="/search"
