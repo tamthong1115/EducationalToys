@@ -22,6 +22,16 @@ public class SecurityConfiguration {
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    private static final String[] AUTH_WHITELIST = {
+            "/v3/api-docs/**",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/api/v1/auth/**",
+            "/api/v1/category/**",
+    };
+
     public SecurityConfiguration(AuthenticationProvider authenticationProvider, JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.authenticationProvider = authenticationProvider;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
@@ -31,8 +41,12 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.
                 csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers(AUTH_WHITELIST).permitAll()
+                        .requestMatchers("/api/v1/user/**").hasAnyAuthority("USER","SUPPLIER", "ADMIN")
+                        .requestMatchers("/api/v1/supplier/**").hasAnyAuthority("SUPPLIER", "ADMIN")
+                        .requestMatchers("/api/v1/admin/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 // Stateless is a session management policy that does not store any session information on the server
@@ -50,7 +64,7 @@ public class SecurityConfiguration {
 
         var cors = new CorsConfiguration();
         cors.setAllowedOrigins(java.util.List.of(allowedOrigins));
-        cors.setAllowedMethods(java.util.List.of("GET", "POST"));
+        cors.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE"));
         cors.setAllowedHeaders(java.util.List.of("*"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
