@@ -79,7 +79,9 @@ const Header = () => {
                     </Form>
                     <div className="flex flex-col md:flex-row gap-4 items-center space-x-4">
                         <span className="text-gray-700">
-                            <div className="">
+
+                            
+               <div className="">
                                 {' '}
                                 Get in touch: care@educationaltoys.co.uk
                             </div>
