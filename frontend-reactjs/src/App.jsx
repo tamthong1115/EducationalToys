@@ -37,7 +37,7 @@ function App() {
                     }
                 />
                 <Route path="/toydetail/1" element={
-          <Home1/>}>
+          <Home1/>}/>
                       
                 <Route
                     path="/search"
