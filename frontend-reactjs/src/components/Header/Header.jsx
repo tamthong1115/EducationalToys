@@ -3,11 +3,13 @@ import {
     // ShopOutlined,
     ShoppingCartOutlined,
 } from '@ant-design/icons'
-import { Button, Dropdown, Input, Menu } from 'antd'
+import { Button, Dropdown, Form, Input, Menu } from 'antd'
 import { useState } from 'react'
 import Login from './Login'
 import Register from './Register'
 import ForgetPassword from './ForgetPassword'
+import FormItem from 'antd/es/form/FormItem'
+import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 
 const Header = () => {
@@ -15,7 +17,7 @@ const Header = () => {
     const [buttonLogin, setButtonLogin] = useState(false)
     const [buttonRegister, setButtonRegister] = useState(false)
     const [buttonForgotPassword, setButtonForgotPassword] = useState(false)
-
+    const navigate = useNavigate()
     const handleLogin = () => {
         setButtonLogin(!buttonLogin)
     }
@@ -62,20 +64,38 @@ const Header = () => {
                             All categories
                         </Button>
                     </Dropdown>
-                    <Input
-                        placeholder="What are you looking for?"
-                        suffix={<SearchOutlined />}
-                        className="w-1/3"
-                    />
+                    <Form
+                        className="w-full"
+                        onFinish={(values) => {
+                            navigate('/search?q=' + values.q)
+                        }}
+                    >
+                        <FormItem name="q">
+                            <Input
+                                placeholder="What are you looking for?"
+                                suffix={<SearchOutlined />}
+                            />
+                        </FormItem>
+                    </Form>
                     <div className="flex flex-col md:flex-row gap-4 items-center space-x-4">
                         <span className="text-gray-700">
-                            <div className=''> Get in touch: care@educationaltoys.co.uk</div>
-                            <Link to="/aboutUs" className='text-[#000] border-1px border-solid underline hover:italic'>About Us ?</Link>
-                        </span>
-                        <div className=''>Hello</div>
-                        <div className='flex items-center'>
-                             {/* About us*/}
+
                             
+               <div className="">
+                                {' '}
+                                Get in touch: care@educationaltoys.co.uk
+                            </div>
+                            <Link
+                                to="/aboutUs"
+                                className="text-[#000] border-1px border-solid underline hover:italic"
+                            >
+                                About Us ?
+                            </Link>
+                        </span>
+                        <div className="">Hello</div>
+                        <div className="flex items-center">
+                            {/* About us*/}
+
                             <button
                                 className="mr-[10px] text-[10px] hover:italic hover:underline bg-[#757FE2] p-[8px] rounded-[10px] font-[400] h-[42px] inline-flex"
                                 id="button-login"
