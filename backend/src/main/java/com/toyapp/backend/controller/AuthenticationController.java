@@ -7,8 +7,6 @@ import com.toyapp.backend.dto.auth.RegisterRequestDTO;
 import com.toyapp.backend.model.User;
 import com.toyapp.backend.service.AuthenticationService;
 import com.toyapp.backend.service.JwtService;
-import com.toyapp.backend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthenticationController {
     private final JwtService jwtService;
 

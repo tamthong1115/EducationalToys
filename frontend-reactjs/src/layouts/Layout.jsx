@@ -5,21 +5,19 @@ import Banner from "../components/Banner/Banner";
 import Hero from "../components/Hero/Hero";
 import Footer from "../components/Footer/Footer";
 
-const Layout = ({ children }) => {
+import { AboutUs } from "../components/AboutUs/AboutUs";
+
+const Layout = ({ children }) => { //cái child này là sao ok để thêm
   return (
     <div className="flex min-h-screen flex-col">
-      <div className="bg-white pb-12">
+      <div className="bg-white">
         <div className="container mx-auto py-4">
           <Header />
         </div>
-        <div className="container mx-auto flex justify-center items-center">
-        <Banner/>
-        </div>
-        <div className="container mx-auto">
-          <Hero />
-        </div>
+
       </div>
-      <div className="container mx-auto flex-1 py-10">{children}</div>
+      <div className="container mx-auto flex-1">{children}</div>
+
       <Footer />
     </div>
   );
