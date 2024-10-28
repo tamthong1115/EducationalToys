@@ -12,6 +12,7 @@ public class CreateCategoryDTO {
         private String name;
         private String description;
         private Long parentId;
+        private String image_url;
 
 
 }

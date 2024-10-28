@@ -3,8 +3,10 @@ package com.toyapp.backend.controller.admin;
 import com.toyapp.backend.dto.category.CategoryDTO;
 import com.toyapp.backend.dto.category.CreateCategoryDTO;
 import com.toyapp.backend.service.CategoryService;
+import com.toyapp.backend.service.CloudinaryService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
@@ -13,14 +15,22 @@ import java.util.Optional;
 public class AdminCategoryController extends BaseAdminController {
 
     private final CategoryService categoryService;
+    private final CloudinaryService cloudinaryService;
 
-    public AdminCategoryController(CategoryService categoryService) {
+    public AdminCategoryController(CategoryService categoryService, CloudinaryService cloudinaryService) {
         this.categoryService = categoryService;
+        this.cloudinaryService = cloudinaryService;
     }
 
 
     @PostMapping("/create")
-    public ResponseEntity<CategoryDTO> createCategory(@RequestBody CreateCategoryDTO createCategoryDTO) {
+    public ResponseEntity<CategoryDTO> createCategory(@RequestParam("name") String name,
+                                                      @RequestParam("image") MultipartFile image) {
+        String imageUrl = cloudinaryService.uploadCategoryImage(image);
+        CreateCategoryDTO createCategoryDTO = new CreateCategoryDTO();
+        createCategoryDTO.setName(name);
+        createCategoryDTO.setImage_url(imageUrl);
+        
         return ResponseEntity.ok(categoryService.createCategory(createCategoryDTO));
     }
 
