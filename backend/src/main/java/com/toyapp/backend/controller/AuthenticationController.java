@@ -33,11 +33,18 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> authenticate(@RequestBody LoginRequestDTO loginRequestDTO) {
-        User user = authenticationService.login(loginRequestDTO);
+      
+        try {
 
-        String token = jwtService.generateToken(user);
 
-        return ResponseEntity.ok(new JwtResponse(token, jwtService.getExpirationTime()));
+            User user = authenticationService.login(loginRequestDTO);
+
+            String token = jwtService.generateToken(user);
+
+            return ResponseEntity.ok(new JwtResponse(token, jwtService.getExpirationTime()));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 }

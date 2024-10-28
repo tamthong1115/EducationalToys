@@ -50,6 +50,15 @@ public class AuthenticationService {
     }
     
     public User login(LoginRequestDTO loginRequestDTO){
+        
+        User user = userRepository.findByEmail(loginRequestDTO.getEmail())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        
+        if(!passwordEncoder.matches(loginRequestDTO.getPassword(), user.getPassword())){
+            throw new RuntimeException("Invalid password");
+        }
+        
+        
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         loginRequestDTO.getEmail(),
@@ -57,6 +66,7 @@ public class AuthenticationService {
                 )
         );
         
-        return userRepository.findByEmail(loginRequestDTO.getEmail());
+        return user;
+        
     }
 }

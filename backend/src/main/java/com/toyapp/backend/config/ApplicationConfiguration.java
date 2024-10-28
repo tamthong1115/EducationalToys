@@ -19,16 +19,12 @@ public class ApplicationConfiguration {
         this.userRepository = userRepository;
     }
 
+
     // Bean is a method that returns an object that Spring framework should manage
     @Bean
     UserDetailsService userDetailsService() {
-        return email -> {
-            var user = userRepository.findByEmail(email);
-            if (user == null) {
-                throw new UsernameNotFoundException("User not found with email: " + email);
-            }
-            return user;
-        };
+        return email -> userRepository.findByEmail(email)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 
     @Bean

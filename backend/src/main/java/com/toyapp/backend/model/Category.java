@@ -22,6 +22,9 @@ public class Category {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
+    @Column(name = "image_url")
+    private String image_url;
+
     @Column(name = "description")
     private String description;
 
@@ -40,7 +43,7 @@ public class Category {
 
 
 
-    public Category(Long id, String name, String description, Long parentId) {
+    public Category(Long id, String name, String description, Long parentId, String image_url) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -48,6 +51,7 @@ public class Category {
             this.parent = new Category();
             this.parent.setId(parentId);
         }
+        this.image_url = image_url;
     }
 
 
