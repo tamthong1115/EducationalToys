@@ -7,16 +7,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/supplier/toy")
-public class ToyController {
+public class SupplierToyController {
     private final ToyService toyService;
     
-    public ToyController(ToyService toyService) {
+    public SupplierToyController(ToyService toyService) {
         this.toyService = toyService;
     }
 
@@ -28,4 +27,22 @@ public class ToyController {
         ToyResponseDTO toyResponseDTO = toyService.createToy(createToyDTO);
         return new ResponseEntity<>(toyResponseDTO, HttpStatus.CREATED);
     }
+    
+    @PutMapping
+    public ResponseEntity<ToyResponseDTO> updateToy(
+            @RequestParam Long id,
+            @ModelAttribute CreateToyDTO createToyDTO,
+            @RequestParam("images") List<MultipartFile> images) {
+        createToyDTO.setImages(images);
+        ToyResponseDTO toyResponseDTO = toyService.updateToy(id, createToyDTO);
+        return new ResponseEntity<>(toyResponseDTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deleteToy(@RequestParam Long id) {
+        toyService.deleteToy(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    
+    
 }

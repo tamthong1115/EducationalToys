@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ToyResponseDTO {
     private Long id;
-    private Long[] categoryIds;
+    private String[] categoryNames;
     private String[] imageUrls;
     private String name;
     private String description;

@@ -21,7 +21,7 @@ public class CloudinaryService {
         return uploadImage(file, "categories");
     }
 
-    public void deleteCategoryImage(String imageUrl) {
+    public void deleteImage(String imageUrl) {
         try {
             String publicId = getPublicId(imageUrl);
             cloudinary.uploader().destroy(publicId, new HashMap<>());
