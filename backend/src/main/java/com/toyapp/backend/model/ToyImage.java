@@ -31,7 +31,7 @@ public class ToyImage {
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")
-    private Instant createdAt;
+    private Instant createdAt = Instant.now();
 
     @Column(name = "deleted_at")
     private Instant deletedAt;

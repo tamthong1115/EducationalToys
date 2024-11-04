@@ -50,6 +50,9 @@ public class Toy {
 
     @OneToMany(mappedBy = "toy", cascade = CascadeType.ALL)
     private List<ToyImage> images;
+    
+    @OneToMany(mappedBy = "toy", cascade = CascadeType.ALL)
+    private List<ToyCategory> categories;
 
 
     @Column(name = "rental_price_day", precision = 10, scale = 2)
@@ -68,7 +71,7 @@ public class Toy {
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")
-    private Instant createdAt;
+    private Instant createdAt = Instant.now();
 
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "updated_at")
