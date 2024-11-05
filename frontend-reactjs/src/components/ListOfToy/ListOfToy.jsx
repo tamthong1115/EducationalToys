@@ -68,91 +68,92 @@ export const ListOfToy = () => {
 
                     <ListItem
                         image = {pic8}
-                        title = "Dens"
+                        title = "Literacy and Language"
                     />
 
                     <ListItem
                         image = {pic9}
-                        title = "Dens"
+                        title = "Maths"
                     />
 
                     <ListItem
                         image = {pic10}
-                        title = "Dens"
+                        title = "Science and Technology"
                     />
 
                     <ListItem
                         image = {pic11}
-                        title = "Dens"
+                        title = "Arts and Crafts"
                     />
 
                     <ListItem
                         image = {pic12}
-                        title = "Dens"
+                        title = "Sports"
                     />
 
                     <ListItem
                         image = {pic13}
-                        title = "Dens"
+                        title = "Playground"
                     />
 
                     <ListItem
                         image = {pic14}
-                        title = "Dens"
+                        title = "Art Drying Racks"
                     />
 
                     <ListItem
                         image = {pic15}
-                        title = "Dens"
+                        title = "Book Stands"
                     />
 
                     <ListItem
                         image = {pic16}
-                        title = "Dens"
+                        title = "Storage Trolleys"
                     />
 
                     <ListItem
                         image = {pic17}
-                        title = "Dens"
+                        title = "Welly Boot Racks"
                     />
 
                     <ListItem
                         image = {pic18}
-                        title = "Dens"
+                        title = "Easels"
                     />
 
                     <ListItem
                         image = {pic19}
-                        title = "Dens"
+                        title = "Furniture and accessories"
                     />
 
                     <ListItem
                         image = {pic20}
-                        title = "Dens"
+                        title = "Games and Puzzles"
                     />
 
                     <ListItem
                         image = {pic21}
-                        title = "Dens"
+                        title = "Outdoor"
                     />
 
                     <ListItem
                         image = {pic22}
-                        title = "Dens"
+                        title = "Role Play"
                     />
 
                     <ListItem
                         image = {pic23}
-                        title = "Dens"
+                        title = "Messy Play"
                     />
 
                     <ListItem
                         image = {pic24}
-                        title = "Dens"
+                        title = "Toys"
                     />
-
             </div>
         </div>
     </>
   )
 }
+
+
