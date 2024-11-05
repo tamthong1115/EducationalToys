@@ -150,7 +150,6 @@ export const ListOfToy = () => {
                         image = {pic24}
                         title = "Toys"
                     />
-
             </div>
         </div>
     </>
