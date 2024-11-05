@@ -6,6 +6,7 @@ import ToysList from '../../components/ToysDetail/ToysList';
 import Banner from "../../components/Banner/Banner"; 
 import Hero from "../../components/Hero/Hero";
 import { ListOfToy } from '../../components/ListOfToy/ListOfToy';
+import { ListOfCategorys } from '../../components/ListOfCategorys/ListOfCategorys';
 const Home = () => {
     return (
       
@@ -15,7 +16,7 @@ const Home = () => {
         <p className="text-lg">Welcome to the home page of our application.</p>
         <ToysList/>
         <ListOfToy/>
-           
+        <ListOfCategorys/>
       </div>
       
     );
