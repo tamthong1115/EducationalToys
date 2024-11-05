@@ -5,6 +5,24 @@ import pic3 from '../../assets/images/ListToyTitle/pic-3.jpg'
 import pic4 from '../../assets/images/ListToyTitle/pic-4.jpg'
 import pic5 from '../../assets/images/ListToyTitle/pic-5.jpg'
 import pic6 from '../../assets/images/ListToyTitle/pic-6.jpg'
+import pic7 from '../../assets/images/ListToyTitle/pic-7.jpg'
+import pic8 from '../../assets/images/ListToyTitle/pic-8.jpg'
+import pic9 from '../../assets/images/ListToyTitle/pic-9.jpg'
+import pic10 from '../../assets/images/ListToyTitle/pic-10.jpg'
+import pic11 from '../../assets/images/ListToyTitle/pic-11.jpg'
+import pic12 from '../../assets/images/ListToyTitle/pic-12.jpg'
+import pic13 from '../../assets/images/ListToyTitle/pic-13.jpg'
+import pic14 from '../../assets/images/ListToyTitle/pic-14.jpg'
+import pic15 from '../../assets/images/ListToyTitle/pic-15.jpg'
+import pic16 from '../../assets/images/ListToyTitle/pic-16.jpg'
+import pic17 from '../../assets/images/ListToyTitle/pic-17.jpg'
+import pic18 from '../../assets/images/ListToyTitle/pic-18.jpg'
+import pic19 from '../../assets/images/ListToyTitle/pic-19.jpg'
+import pic20 from '../../assets/images/ListToyTitle/pic-20.jpg'
+import pic21 from '../../assets/images/ListToyTitle/pic-21.jpg'
+import pic22 from '../../assets/images/ListToyTitle/pic-22.jpg'
+import pic23 from '../../assets/images/ListToyTitle/pic-23.jpg'
+import pic24 from '../../assets/images/ListToyTitle/pic-24.jpg'
 import { ListItem } from './ListItem'
 export const ListOfToy = () => {
   return (
@@ -20,27 +38,117 @@ export const ListOfToy = () => {
                     />
                     <ListItem
                         image = {pic2}
-                        title = "Balance"
+                        title = "Behavioural"
                     />
 
                     <ListItem
                         image = {pic3}
-                        title = "Balance"
+                        title = "Construction Toys"
                     />
 
                     <ListItem
                         image = {pic4}
-                        title = "Balance"
+                        title = "Tuff Trays"
                     />
 
                     <ListItem
                         image = {pic5}
-                        title = "Balance"
+                        title = "Music"
                     />
 
                     <ListItem
                         image = {pic6}
-                        title = "Balance"
+                        title = "Sand and Water"
+                    />
+
+                    <ListItem
+                        image = {pic7}
+                        title = "Dens"
+                    />
+
+                    <ListItem
+                        image = {pic8}
+                        title = "Dens"
+                    />
+
+                    <ListItem
+                        image = {pic9}
+                        title = "Dens"
+                    />
+
+                    <ListItem
+                        image = {pic10}
+                        title = "Dens"
+                    />
+
+                    <ListItem
+                        image = {pic11}
+                        title = "Dens"
+                    />
+
+                    <ListItem
+                        image = {pic12}
+                        title = "Dens"
+                    />
+
+                    <ListItem
+                        image = {pic13}
+                        title = "Dens"
+                    />
+
+                    <ListItem
+                        image = {pic14}
+                        title = "Dens"
+                    />
+
+                    <ListItem
+                        image = {pic15}
+                        title = "Dens"
+                    />
+
+                    <ListItem
+                        image = {pic16}
+                        title = "Dens"
+                    />
+
+                    <ListItem
+                        image = {pic17}
+                        title = "Dens"
+                    />
+
+                    <ListItem
+                        image = {pic18}
+                        title = "Dens"
+                    />
+
+                    <ListItem
+                        image = {pic19}
+                        title = "Dens"
+                    />
+
+                    <ListItem
+                        image = {pic20}
+                        title = "Dens"
+                    />
+
+                    <ListItem
+                        image = {pic21}
+                        title = "Dens"
+                    />
+
+                    <ListItem
+                        image = {pic22}
+                        title = "Dens"
+                    />
+
+                    <ListItem
+                        image = {pic23}
+                        title = "Dens"
+                    />
+
+                    <ListItem
+                        image = {pic24}
+                        title = "Dens"
                     />
 
             </div>
