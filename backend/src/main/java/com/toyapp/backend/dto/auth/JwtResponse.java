@@ -1,28 +1,17 @@
 package com.toyapp.backend.dto.auth;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class JwtResponse {
-    private String token;
+    private final String token;
 
     private long expirationTime;
 
     public JwtResponse(String token, long expirationTime) {
         this.token = token;
-        this.expirationTime = expirationTime;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public long getExpirationTime() {
-        return expirationTime;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public void setExpirationTime(long expirationTime) {
         this.expirationTime = expirationTime;
     }
 
