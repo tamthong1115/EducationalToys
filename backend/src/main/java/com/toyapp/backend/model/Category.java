@@ -4,20 +4,18 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
 
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name="categories")
+@Table(name = "categories")
 public class Category {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
 
     @Column(name = "name", nullable = false, length = 100)
     private String name;
@@ -29,16 +27,14 @@ public class Category {
     @JoinColumn(name = "parent_id")
     private Category parent;
 
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false)
     private Instant createdAt = Instant.now();
 
     @Column(name = "updated_at")
-    private Instant updatedAt = Instant.now();
+    private Instant updatedAt;
 
     @Column(name = "deleted_at")
     private Instant deletedAt;
-
-
 
     public Category(Long id, String name, String description, Long parentId) {
         this.id = id;
@@ -48,9 +44,19 @@ public class Category {
             this.parent = new Category();
             this.parent.setId(parentId);
         }
+        this.createdAt = Instant.now(); // Cập nhật giá trị createdAt
+        this.updatedAt = Instant.now(); // Cập nhật giá trị updatedAt
     }
 
+    @PrePersist
+    protected void onCreate() {
+        createdAt = Instant.now();
+    }
 
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = Instant.now();
+    }
 
     public Long getParentId() {
         return parent != null ? parent.getId() : null;

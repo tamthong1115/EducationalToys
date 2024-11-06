@@ -14,6 +14,8 @@ import SearchList from './components/SearchList/SearchList'
 
 import { AboutUs } from './components/AboutUs/AboutUs'
 import ToysDetailsPage from './components/ToysDetail/ToysDetailsPage';
+import UserChat from './components/ChatFunction/UserChat';
+import AdminChat from './components/ChatFunction/Adminchat';
 
 function App() {
 
@@ -25,7 +27,18 @@ function App() {
                     element={
                         <Layout>
                             <Home />
+                            <UserChat/>
                         </Layout>
+                       
+                       
+
+
+                    }
+                />
+                 <Route
+                    path="/Admin"
+                    element={
+                        <AdminChat/>
                     }
                 />
                 <Route
