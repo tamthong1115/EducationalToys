@@ -34,6 +34,7 @@ public class SecurityConfiguration {
             "/api/v1/category/**",
             "/ws",
             "/ws/**"
+
     };
 
 //    public SecurityConfiguration(AuthenticationProvider authenticationProvider, JwtAuthenticationFilter jwtAuthenticationFilter) {

@@ -16,9 +16,11 @@ import java.util.stream.Collectors;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final CloudinaryService cloudinaryService;
 
-    public CategoryService( CategoryRepository categoryRepository){
+    public CategoryService( CategoryRepository categoryRepository, CloudinaryService cloudinaryService) {
         this.categoryRepository = categoryRepository;
+        this.cloudinaryService = cloudinaryService;
     }
 
     public List<CategoryDTO> getAllCategories(){
@@ -49,19 +51,21 @@ public class CategoryService {
     }
 
     public void deleteCategory(Long id) {
+        Optional<Category> category = categoryRepository.findById(id);
+        category.ifPresent(value -> cloudinaryService.deleteImage(value.getImage_url()));
         categoryRepository.deleteById(id);
     }
     
     private CategoryDTO convertToDTO(Category category){
-        return new CategoryDTO(category.getId(), category.getName(), category.getDescription(), category.getParentId());
+        return new CategoryDTO(category.getId(), category.getName(), category.getDescription(), category.getParentId(), category.getImage_url());
     }
 
     private Category convertToEntity(CreateCategoryDTO createCategoryDTO) {
-        return new Category(null, createCategoryDTO.getName(), createCategoryDTO.getDescription(), createCategoryDTO.getParentId());
+        return new Category(null, createCategoryDTO.getName(), createCategoryDTO.getDescription(), createCategoryDTO.getParentId(), createCategoryDTO.getImage_url());
     }
 
     private Category convertToEntity(CategoryDTO categoryDTO) {
-        return new Category(categoryDTO.getId(), categoryDTO.getName(), categoryDTO.getDescription(), categoryDTO.getParentId());
+        return new Category(categoryDTO.getId(), categoryDTO.getName(), categoryDTO.getDescription(), categoryDTO.getParentId(), categoryDTO.getImage_url());
     }
 }
 
