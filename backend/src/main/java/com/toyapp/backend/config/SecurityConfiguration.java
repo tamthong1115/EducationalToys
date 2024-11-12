@@ -15,6 +15,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.List;
+
 
 @Configuration
 @EnableWebSecurity
@@ -64,9 +66,12 @@ public class SecurityConfiguration {
         String allowedOrigins = dotenv.get("CORS_ALLOWED_ORIGINS", "*");
 
         var cors = new CorsConfiguration();
-        cors.setAllowedOrigins(java.util.List.of(allowedOrigins));
-        cors.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE"));
-        cors.setAllowedHeaders(java.util.List.of("*"));
+        cors.setAllowedOrigins(List.of(allowedOrigins.split(",")));
+        cors.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        cors.setAllowedHeaders(List.of("*"));
+        cors.addExposedHeader("Access-Control-Allow-Origin");
+        cors.addAllowedHeader("Access-Control-Allow-Origin");   
+
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", cors);

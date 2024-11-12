@@ -14,6 +14,5 @@ public class JwtResponse {
         this.token = token;
         this.expirationTime = expirationTime;
     }
-
 }
 
