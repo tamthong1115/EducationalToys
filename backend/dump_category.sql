@@ -302,17 +302,18 @@ ALTER SEQUENCE public.categories_id_seq OWNED BY public.categories.id;
 -- Name: chats; Type: TABLE; Schema: public; Owner: postgres
 --
 
-CREATE TABLE public.chats (
+
+CREATE TABLE message (
     id integer NOT NULL,
     sender_id integer NOT NULL,
     receiver_id integer NOT NULL,
     message text NOT NULL,
-    read boolean DEFAULT false,
+--     read boolean DEFAULT false,
     created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP
 );
 
 
-ALTER TABLE public.chats OWNER TO postgres;
+ALTER TABLE message OWNER TO postgres;
 
 --
 -- Name: chats_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
