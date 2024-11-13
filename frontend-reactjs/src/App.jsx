@@ -1,6 +1,5 @@
 import {
     Routes,
-    BrowserRouter as Router,
     Route,
     // Navigate,
 } from 'react-router-dom'
@@ -24,7 +23,7 @@ import CancelPayment from './components/CancelPayment/CancelPayment'
 
 function App() {
     return (
-        <Router>
+        <>
             <Routes>
                 <Route
                     path="/"
@@ -68,7 +67,7 @@ function App() {
                     }
                 />
             </Routes>
-        </Router>
+        </>
     )
 }
 

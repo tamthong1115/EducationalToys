@@ -16,6 +16,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import java.util.List;
+
 
 @Configuration
 @EnableWebSecurity
@@ -63,6 +65,7 @@ public class SecurityConfiguration {
         return http.build();
     }
 
+
 //    @Bean
 //    CorsConfigurationSource corsConfigurationSource() {
 //        Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
@@ -78,6 +81,7 @@ public class SecurityConfiguration {
 //
 //        return source;
 //    }
+
 
 
 }
