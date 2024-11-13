@@ -1,9 +1,0 @@
-{
-  "dependencies": {
-    "aos": "^2.3.4",
-    "express": "^4.21.1",
-    "global": "^4.4.0",
-    "socket.io": "^4.8.1"
-  }
-  
-}
