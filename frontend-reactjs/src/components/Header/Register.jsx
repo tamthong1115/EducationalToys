@@ -1,7 +1,35 @@
     // src/components/Header/Register.jsx
     import PropTypes from 'prop-types'
+    import {useMutation} from "@tanstack/react-query";
+    import {useForm} from "react-hook-form";
+    import {register as registerAPI} from '../../API/AuthAPI.js'
+    import {toast} from "react-hot-toast";
 
-    const Register = ({ handleRegister, handleSubmit }) => {
+    const Register = ({ handleRegister }) => {
+
+        const { register, handleSubmit, formState: { errors } } = useForm({
+            mode: 'onBlur',
+        });
+
+        const mutation = useMutation({
+            mutationFn: registerAPI,
+            onSuccess: () => {
+                toast.success('Registration successful');
+                handleRegister();
+            },
+            onError: (error) => {
+                toast.error(error.message || 'Registration failed');
+            },
+        });
+
+        const onSubmit = handleSubmit(async (data) => {
+            try {
+                await mutation.mutateAsync(data);
+            } catch (error) {
+                console.error('Registration failed', error);
+            }
+        });
+
         return (
             <>
                 <div
@@ -9,29 +37,46 @@
                     onClick={handleRegister}
                 ></div>
                 <div className="flex justify-center items-center relative z-9999">
-                    <form className="bg-[#FFFFFF] rounded-[6px] border-[1px] border-solid border-[#ddd] w-[550px] h-auto fixed p-[40px] top-[150px] z-99999">
+                    <form onSubmit={onSubmit}
+                          className="bg-[#FFFFFF] rounded-[6px] border-[1px] border-solid border-[#ddd] w-[550px] h-auto fixed p-[40px] top-[150px] z-99999">
                         <h2 className="mb-[20px] text-[36px] font-[700]">
                             Register
                         </h2>
                         <div className="">
+                            {errors.name && <span className="text-red-600">{errors.name.message}</span>}
+                            <input
+                                type="name"
+                                name="name"
+                                placeholder="Enter yours name...."
+                                className="h-[60px] py-[10px] px-[20px] outline-none w-[100%] bg-[#F5F5F5] mb-[20px] rounded-[10px]"
+                                {...register('name', {required: 'Name is required'})}
+                            />
+                        </div>
+
+
+                        <div className="">
+                            {errors.email && <span className="text-red-600">{errors.email.message}</span>}
                             <input
                                 type="email"
                                 name="email"
                                 placeholder="Enter yours email...."
                                 className="h-[60px] py-[10px] px-[20px] outline-none w-[100%] bg-[#F5F5F5] mb-[20px] rounded-[10px]"
+                                {...register('email', {required: 'Email is required'})}
                             />
                         </div>
                         <div className="">
+                            {errors.password && <span className="text-red-600">{errors.password.message}</span>}
                             <input
                                 type="password"
                                 name="password"
                                 placeholder="Enter yours password"
                                 className="h-[60px] py-[10px] px-[20px] outline-none w-[100%] bg-[#F5F5F5] mb-[20px] rounded-[10px]"
+                                {...register('password', {required: 'Password is required'})}
                             />
                         </div>
                         <button
                             className="h-[60px] bg-[#818CF8] text-[white] font-[500] w-[100%] rounded-[10px] hover:bg-[#231F40]"
-                            onClick={handleSubmit}
+                            type={'submit'}
                         >
                             Register
                         </button>
@@ -49,7 +94,6 @@
 
     Register.propTypes = {
         handleRegister: PropTypes.func.isRequired,
-        handleSubmit: PropTypes.func.isRequired,
     }
 
     export default Register
