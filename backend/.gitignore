@@ -36,10 +36,3 @@ build/
 .env
 
 local/
-=======
-.idea/
-
-node_modules/
-
-.vscode/
->>>>>>> 05124f2493ece3d83f3ca66ae122d7679be2a471
