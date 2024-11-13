@@ -12,12 +12,7 @@ import org.springframework.stereotype.Controller;
 @RequiredArgsConstructor
 public class ChatController {
     private final SimpMessagingTemplate template;
-//    @MessageMapping("/send") // Đường dẫn cho tin nhắn gửi
-//    @SendTo("/topic/messages") // Đường dẫn cho tin nhắn phản hồi
-//    public Message sendMessage(Message message) {
-//
-//        return message; // Trả lại tin nhắn đã nhận
-//    }
+
 
     @MessageMapping("/private-message")
     public void recMessage(

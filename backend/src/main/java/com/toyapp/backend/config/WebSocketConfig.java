@@ -13,12 +13,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         registry.addEndpoint("/ws")  // Tạo endpoint cho WebSocket
-//                .setAllowedOrigins("http://localhost:5173")  // Cho phép frontend kết nối (React frontend chạy tại cổng 5173)
+
                 .setAllowedOriginPatterns("*");
-//
-//        registry.addEndpoint("/chat")  // Tạo endpoint cho WebSocket
-//                .setAllowedOrigins("http://localhost:5173")  // Cho phép frontend kết nối (React frontend chạy tại cổng 5173)
-//                .withSockJS();  // Sử dụng SockJS dự phòng cho các trình duyệt không hỗ trợ WebSocket
+
     }
 
     @Override

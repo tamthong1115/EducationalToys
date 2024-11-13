@@ -6,19 +6,23 @@ import {
 } from 'react-router-dom'
 import Layout from './layouts/Layout'
 
-import Home from "./pages/Home/Home";
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import Home from './pages/Home/Home'
+import '@fortawesome/fontawesome-free/css/all.min.css'
 
 import SearchList from './components/SearchList/SearchList'
 
-
 import { AboutUs } from './components/AboutUs/AboutUs'
+
 import ToysDetailsPage from './components/ToysDetail/ToysDetailsPage';
 import UserChat from './components/ChatFunction/UserChat';
 import AdminChat from './components/ChatFunction/Adminchat';
 
-function App() {
 
+import PaymentSuccess from './components/PaymentSuccess/PaymentSuccess'
+import CancelPayment from './components/CancelPayment/CancelPayment'
+
+
+function App() {
     return (
         <Router>
             <Routes>
@@ -41,6 +45,10 @@ function App() {
                         <AdminChat/>
                     }
                 />
+
+                <Route path="/payment-success" element={<PaymentSuccess />} />
+                <Route path="/cancel-payment" element={<CancelPayment />} />
+
                 <Route
                     path="/aboutUs"
                     element={
@@ -49,9 +57,8 @@ function App() {
                         </Layout>
                     }
                 />
-                <Route path="/toydetail/1" element={
-          <ToysDetailsPage/>}/>
-                      
+                <Route path="/toydetail/1" element={<ToysDetailsPage />} />
+
                 <Route
                     path="/search"
                     element={
@@ -62,8 +69,7 @@ function App() {
                 />
             </Routes>
         </Router>
-    );
-
+    )
 }
 
 export default App
