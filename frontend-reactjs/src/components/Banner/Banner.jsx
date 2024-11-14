@@ -1,14 +1,11 @@
-
-import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTruck, faBoxOpen, faCommentDots, faStar } from '@fortawesome/free-solid-svg-icons'; // Import all needed icons
-import bannerImage from "../../../src/assets/images/banner.png"; 
 
 const Banner = () => {
   return (
-    <div className="relative flex flex-col justify-center items-center py-20 bg-[#F8F8F8] z-0"> {/* Set z-index of banner */}
+    <div className="flex flex-col justify-center items-center py-20 bg-[#F8F8F8]src/assets/images/Banner.png"> {/* Set z-index of banner */}
       <img
-        src={bannerImage} 
+        src="src/assets/images/Banner.png"
         alt="Banner"
         style={{ width: "100%", height: "auto" }} 
         className="object-cover" 
