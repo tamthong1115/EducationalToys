@@ -1,0 +1,46 @@
+# Ignore Maven/Gradle directories
+target/
+out/
+build/
+
+# Ignore IDE files
+/.idea/
+/*.iml
+*.log
+*.iws
+*.ipr
+/.vscode/
+/.project
+/.classpath
+/.settings/
+/*.launch
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore Eclipse project files
+.classpath
+.project
+.settings/
+
+# Ignore IntelliJ IDEA project files
+.idea/
+*.iml
+
+# Ignore Logs
+logs/
+*.log
+*.gz
+
+# Ignore temporary files
+*.tmp
+*.swp
+
+# Ignore dependency directories
+**/target/
+**/build/
+node_modules/
+
+# Ignore compiled class files
+*.class
