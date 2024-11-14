@@ -11,9 +11,15 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import SearchList from './components/SearchList/SearchList'
 
 import { AboutUs } from './components/AboutUs/AboutUs'
-import ToysDetailsPage from './components/ToysDetail/ToysDetailsPage'
+
+import ToysDetailsPage from './components/ToysDetail/ToysDetailsPage';
+import UserChat from './components/ChatFunction/UserChat';
+import AdminChat from './components/ChatFunction/Adminchat';
+
+
 import PaymentSuccess from './components/PaymentSuccess/PaymentSuccess'
 import CancelPayment from './components/CancelPayment/CancelPayment'
+
 
 function App() {
     return (
@@ -24,7 +30,18 @@ function App() {
                     element={
                         <Layout>
                             <Home />
+                            <UserChat/>
                         </Layout>
+                       
+                       
+
+
+                    }
+                />
+                 <Route
+                    path="/Admin"
+                    element={
+                        <AdminChat/>
                     }
                 />
 
