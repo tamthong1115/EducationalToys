@@ -11,9 +11,11 @@ import ForgetPassword from './ForgetPassword'
 import FormItem from 'antd/es/form/FormItem'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext.jsx'
+import AccountMenu from './AccountMenu.jsx'
 
 const Header = () => {
-    // const [isOpen, setIsOpen] = useState(false)
+    const { isAuthenticated, logout } = useAuth()
     const [buttonLogin, setButtonLogin] = useState(false)
     const [buttonRegister, setButtonRegister] = useState(false)
     const [buttonForgotPassword, setButtonForgotPassword] = useState(false)
@@ -108,6 +110,25 @@ const Header = () => {
                             <button className="hidden text-[18px] hover:italic hover:underline font-[400]">
                                 Log Out
                             </button>
+                        <div className="flex items-center">
+                            {!isAuthenticated ? (
+                                <>
+                                    <button
+                                        className="mr-[10px] text-nowrap text-[15px] hover:italic hover:underline bg-[#757FE2] p-[8px] rounded-[10px] font-[400] h-[42px] inline-flex"
+                                        onClick={handleLogin}
+                                    >
+                                        Log In
+                                    </button>
+                                    <button
+                                        className="mr-[10px] text-[15px] hover:italic hover:underline bg-[#757FE2] p-[8px] rounded-[10px] font-[400] h-[42px] inline-flex"
+                                        onClick={handleRegister}
+                                    >
+                                        Register
+                                    </button>
+                                </>
+                            ) : (
+                               <AccountMenu/>
+                            )}
                         </div>
                         <Link to={'/cart'}>
                             <ShoppingCartOutlined className="cursor-pointer" />
@@ -160,7 +181,6 @@ const Header = () => {
             {buttonLogin && (
                 <Login
                     handleLogin={handleLogin}
-                    handleSubmit={handleSubmit}
                     handleForgotPassword={handleForgotPassword}
                     handleHaveNotAccount={handleRegister}
                 />

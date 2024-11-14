@@ -1,6 +1,5 @@
 import {
     Routes,
-    BrowserRouter as Router,
     Route,
     // Navigate,
 } from 'react-router-dom'
@@ -19,7 +18,7 @@ import CartPage from './pages/Cart'
 
 function App() {
     return (
-        <Router>
+        <>
             <Routes>
                 <Route
                     path="/"
@@ -61,7 +60,7 @@ function App() {
                     }
                 />
             </Routes>
-        </Router>
+        </>
     )
 }
 

@@ -1,12 +1,53 @@
 // src/components/Header/Login.jsx
 import PropTypes from 'prop-types'
+import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {useLocation, useNavigate} from "react-router-dom";
+import {useForm} from "react-hook-form";
+import {login} from '../../API/AuthAPI.js'
+import {toast} from "react-hot-toast";
+
 
 const Login = ({
-    handleLogin,
-    handleSubmit,
-    handleForgotPassword,
-    handleHaveNotAccount,
-}) => {
+                   handleLogin,
+                   handleForgotPassword,
+                   handleHaveNotAccount,
+               }) => {
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const queryClient = useQueryClient();
+
+    const {
+        register,
+        handleSubmit,
+        formState: {errors},
+    } = useForm({
+        mode: 'onBlur',
+    });
+
+    const mutation = useMutation( {
+        mutationFn: login,
+        onSuccess: async (data) => {
+            localStorage.setItem('token', data.token);
+            // Refetch or invalidate the query to re-validate the token
+            await queryClient.invalidateQueries({ queryKey: ['validateToken'] });
+            handleLogin()
+            toast.success('Login successfully');
+            navigate(location?.state?.from?.pathname || '/');
+        },
+        onError: (error) => {
+            console.error('Login failed', error);
+        },
+    });
+
+    const onSubmit = handleSubmit(async (data) => {
+       try {
+            await mutation.mutateAsync(data);
+       }catch (error) {
+            console.error('Login failed', error);
+        }
+    });
+
     return (
         <>
             <div
@@ -14,27 +55,37 @@ const Login = ({
                 onClick={handleLogin}
             ></div>
             <div className="flex justify-center items-center relative z-9999">
-                <form className="bg-[#FFFFFF] rounded-[6px] border-[1px] border-solid border-[#ddd] w-[550px] h-auto fixed p-[40px] top-[150px]">
+                <form onSubmit={onSubmit}
+                      className="bg-[#FFFFFF] rounded-[6px] border-[1px] border-solid border-[#ddd] w-[550px] h-auto fixed p-[40px] top-[150px]">
                     <h2 className="mb-[20px] text-[36px] font-[700]">Login</h2>
                     <div>
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="Enter your email..."
-                            className="h-[60px] py-[10px] px-[20px] outline-none w-[100%] bg-[#F5F5F5] mb-[20px] rounded-[10px]"
-                        />
+                        <label className="flex-1 text-sm font-bold text-gray-700">
+                            {errors.email && <span className="text-red-600">{errors.email.message}</span>}
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="Enter your email..."
+                                className="h-[60px] py-[10px] px-[20px] outline-none w-[100%] bg-[#F5F5F5] mb-[20px] rounded-[10px]"
+                                {...register('email', {required: 'Email is required'})}
+                            />
+                        </label>
+
                     </div>
                     <div className="">
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder="Enter your password"
-                            className="h-[60px] py-[10px] px-[20px] outline-none w-[100%] bg-[#F5F5F5] mb-[20px] rounded-[10px]"
-                        />
+                        <label className="flex-1 text-sm font-bold text-gray-700">
+                            {errors.password && <span className="text-red-600">{errors.password.message}</span>}
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                className="h-[60px] py-[10px] px-[20px] outline-none w-[100%] bg-[#F5F5F5] mb-[20px] rounded-[10px]"
+                                {...register('password', {required: 'Password is required'})}
+                            />
+                        </label>
                     </div>
                     <button
                         className="h-[60px] bg-[#818CF8] text-[white] font-[500] w-[100%] rounded-[10px] hover:bg-[#231F40]"
-                        onClick={handleSubmit}
+                        type={'submit'}
                     >
                         Login
                     </button>
@@ -52,8 +103,8 @@ const Login = ({
                             You forgot password?
                         </span>
                         <span
-                            className="hover:italic hover:underline"
-                            onClick={handleHaveNotAccount}
+                                 className="hover:italic hover:underline"
+                                 onClick={handleHaveNotAccount}
                         >
                             You have not account?
                         </span>
@@ -65,7 +116,6 @@ const Login = ({
 }
 Login.propTypes = {
     handleLogin: PropTypes.func.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
     handleForgotPassword: PropTypes.func.isRequired,
     handleHaveNotAccount: PropTypes.func.isRequired,
 }
