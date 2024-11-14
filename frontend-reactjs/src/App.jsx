@@ -14,7 +14,7 @@ import { AboutUs } from './components/AboutUs/AboutUs'
 
 import ToysDetailsPage from './components/ToysDetail/ToysDetailsPage';
 import UserChat from './components/ChatFunction/UserChat';
-import AdminChat from './components/ChatFunction/Adminchat';
+import AdminChat from './components/ChatFunction/AdminChat';
 
 
 import PaymentSuccess from './components/PaymentSuccess/PaymentSuccess'
