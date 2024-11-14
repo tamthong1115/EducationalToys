@@ -27,10 +27,15 @@ createRoot(document.getElementById('root')).render(
         <QueryClientProvider client={queryClient}>
             <Router>
                 <AuthProvider>
-                    <Elements stripe={stripePromise}>
-                        <App />
-                        <Toaster position="top-right" reverseOrder={false} />
-                    </Elements>
+                    <Provider store={store}>
+                        <Elements stripe={stripePromise}>
+                            <App />
+                            <Toaster
+                                position="top-right"
+                                reverseOrder={false}
+                            />
+                        </Elements>
+                    </Provider>
                 </AuthProvider>
             </Router>
         </QueryClientProvider>
