@@ -1,6 +1,7 @@
 package com.toyapp.backend.controller;
 
 
+import com.toyapp.backend.dto.ExceptionResponse;
 import com.toyapp.backend.dto.auth.JwtResponse;
 import com.toyapp.backend.dto.auth.LoginRequestDTO;
 import com.toyapp.backend.dto.auth.RegisterRequestDTO;
@@ -35,21 +36,16 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtResponse> authenticate(@RequestBody LoginRequestDTO loginRequestDTO) {
+    public ResponseEntity<?> authenticate(@RequestBody LoginRequestDTO loginRequestDTO) {
+        User user = authenticationService.login(loginRequestDTO);
 
-        try {
-            User user = authenticationService.login(loginRequestDTO);
-
-            if(user ==null){
-                throw new CustomException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
-            }
-
-            String token = jwtService.generateToken(user);
-
-            return ResponseEntity.ok(new JwtResponse(token, jwtService.getExpirationTime()));
-        }catch (Exception e){
-            return ResponseEntity.badRequest().build();
+        if (user == null) {
+            throw new CustomException(HttpStatus.UNAUTHORIZED, "Invalid credentials");
         }
+
+        String token = jwtService.generateToken(user);
+
+        return ResponseEntity.ok(new JwtResponse(token, jwtService.getExpirationTime()));
     }
 
     @PostMapping("/logout")

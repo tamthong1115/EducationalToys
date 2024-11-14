@@ -2,11 +2,11 @@
 import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTruck, faBoxOpen, faCommentDots, faStar } from '@fortawesome/free-solid-svg-icons'; // Import all needed icons
-import bannerImage from "../../../src/assets/images/banner.png"; 
+import bannerImage from "../../../src/assets/images/Banner.png";
 
 const Banner = () => {
   return (
-    <div className="relative flex flex-col justify-center items-center py-20 bg-[#F8F8F8] z-0"> {/* Set z-index of banner */}
+    <div className="flex flex-col justify-center items-center py-20 bg-[#F8F8F8]"> {/* Set z-index of banner */}
       <img
         src={bannerImage} 
         alt="Banner"
