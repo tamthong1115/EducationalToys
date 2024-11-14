@@ -4,7 +4,6 @@ import Header from "../components/Header/Header";
 import Banner from "../components/Banner/Banner"; 
 import Hero from "../components/Hero/Hero";
 import Footer from "../components/Footer/Footer";
-
 import { AboutUs } from "../components/AboutUs/AboutUs";
 
 const Layout = ({ children }) => { //cái child này là sao ok để thêm
@@ -17,7 +16,6 @@ const Layout = ({ children }) => { //cái child này là sao ok để thêm
 
       </div>
       <div className="container mx-auto flex-1">{children}</div>
-
       <Footer />
     </div>
   );
