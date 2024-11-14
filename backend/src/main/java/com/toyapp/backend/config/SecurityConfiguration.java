@@ -47,7 +47,9 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.
                 csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
+                .cors(cors -> {
+                    cors.configurationSource(corsConfigurationSource());
+                })
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(AUTH_WHITELIST).permitAll()
                         .requestMatchers("/api/v1/user/**").hasAnyAuthority("USER","SUPPLIER", "ADMIN")
@@ -68,11 +70,9 @@ public class SecurityConfiguration {
 
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
-        Dotenv dotenv = Dotenv.configure().ignoreIfMissing().load();
-        String allowedOrigins = dotenv.get("CORS_ALLOWED_ORIGINS", "http://localhost:8080");
 
         var cors = new CorsConfiguration();
-        cors.setAllowedOrigins(java.util.List.of(allowedOrigins));
+        cors.setAllowedOrigins(java.util.List.of("*"));
         cors.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE"));
         cors.setAllowedHeaders(java.util.List.of("*"));
 
