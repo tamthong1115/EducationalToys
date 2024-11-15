@@ -19,6 +19,7 @@ import AdminChat from './components/ChatFunction/AdminChat';
 
 import PaymentSuccess from './components/PaymentSuccess/PaymentSuccess'
 import CancelPayment from './components/CancelPayment/CancelPayment'
+import CartPage from './pages/Cart'
 
 
 function App() {
@@ -63,6 +64,15 @@ function App() {
                     element={
                         <Layout>
                             <SearchList />
+                        </Layout>
+                    }
+                />
+
+                <Route
+                    path="/cart"
+                    element={
+                        <Layout>
+                            <CartPage />
                         </Layout>
                     }
                 />

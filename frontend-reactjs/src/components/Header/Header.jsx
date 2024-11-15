@@ -11,11 +11,11 @@ import ForgetPassword from './ForgetPassword'
 import FormItem from 'antd/es/form/FormItem'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-import {useAuth} from "../../context/AuthContext.jsx";
-import AccountMenu from "./AccountMenu.jsx";
+import { useAuth } from '../../context/AuthContext.jsx'
+import AccountMenu from './AccountMenu.jsx'
 
 const Header = () => {
-   const {isAuthenticated, logout} = useAuth();
+    const { isAuthenticated, logout } = useAuth()
     const [buttonLogin, setButtonLogin] = useState(false)
     const [buttonRegister, setButtonRegister] = useState(false)
     const [buttonForgotPassword, setButtonForgotPassword] = useState(false)
@@ -81,9 +81,7 @@ const Header = () => {
                     </Form>
                     <div className="flex flex-col md:flex-row gap-4 items-center space-x-4">
                         <span className="text-gray-700">
-
-                            
-               <div className="">
+                            <div className="">
                                 {' '}
                                 Get in touch: care@educationaltoys.co.uk
                             </div>
@@ -94,6 +92,24 @@ const Header = () => {
                                 About Us ?
                             </Link>
                         </span>
+                        <div className="flex items-center flex-col">
+                            {/* About us*/}
+                            <button
+                                className="mr-[10px] text-[10px] hover:italic hover:underline bg-[#757FE2] p-[8px] rounded-[10px] font-[400] h-[42px] inline-flex"
+                                id="button-login"
+                                onClick={handleLogin}
+                            >
+                                Log In
+                            </button>
+                            <button
+                                className="mr-[10px] text-[10px] hover:italic hover:underline bg-[#757FE2] p-[8px] rounded-[10px] font-[400] h-[42px] inline-flex"
+                                onClick={handleRegister}
+                            >
+                                Register
+                            </button>
+                            <button className="hidden text-[18px] hover:italic hover:underline font-[400]">
+                                Log Out
+                            </button>
                         <div className="flex items-center">
                             {!isAuthenticated ? (
                                 <>
@@ -114,7 +130,9 @@ const Header = () => {
                                <AccountMenu/>
                             )}
                         </div>
-                        <ShoppingCartOutlined className="cursor-pointer" />{' '}
+                        <Link to={'/cart'}>
+                            <ShoppingCartOutlined className="cursor-pointer" />
+                        </Link>
                     </div>
                 </div>
 
