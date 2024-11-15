@@ -25,135 +25,61 @@ import pic23 from '../../assets/images/ListToyTitle/pic-23.jpg'
 import pic24 from '../../assets/images/ListToyTitle/pic-24.jpg'
 import { ListItem } from './ListItem'
 export const ListOfToy = () => {
-  return (
-    <>
-        <div className='container mt-[60px]'>
-            <div className='text-black text-[24px] font-[700] mb-[24px]'>
-                Shop By Category
+    return (
+        <>
+            <div className="container mt-[60px]">
+                <div className="text-black text-[24px] font-[700] mb-[24px]">
+                    Shop By Category
+                </div>
+                <div className="grid grid-cols-6 gap-[20px]">
+                    <ListItem image={pic1} title="Balance" />
+                    <ListItem image={pic2} title="Behavioural" />
+
+                    <ListItem image={pic3} title="Construction Toys" />
+
+                    <ListItem image={pic4} title="Tuff Trays" />
+
+                    <ListItem image={pic5} title="Music" />
+
+                    <ListItem image={pic6} title="Sand and Water" />
+
+                    <ListItem image={pic7} title="Dens" />
+
+                    <ListItem image={pic8} title="Literacy and Language" />
+
+                    <ListItem image={pic9} title="Maths" />
+
+                    <ListItem image={pic10} title="Science and Technology" />
+
+                    <ListItem image={pic11} title="Arts and Crafts" />
+
+                    <ListItem image={pic12} title="Sports" />
+
+                    <ListItem image={pic13} title="Playground" />
+
+                    <ListItem image={pic14} title="Art Drying Racks" />
+
+                    <ListItem image={pic15} title="Book Stands" />
+
+                    <ListItem image={pic16} title="Storage Trolleys" />
+
+                    <ListItem image={pic17} title="Welly Boot Racks" />
+
+                    <ListItem image={pic18} title="Easels" />
+
+                    <ListItem image={pic19} title="Furniture and accessories" />
+
+                    <ListItem image={pic20} title="Games and Puzzles" />
+
+                    <ListItem image={pic21} title="Outdoor" />
+
+                    <ListItem image={pic22} title="Role Play" />
+
+                    <ListItem image={pic23} title="Messy Play" />
+
+                    <ListItem image={pic24} title="Toys" />
+                </div>
             </div>
-            <div className='grid grid-cols-6 gap-[20px]'>
-                    <ListItem
-                        image = {pic1}
-                        title = "Balance"
-                    />
-                    <ListItem
-                        image = {pic2}
-                        title = "Behavioural"
-                    />
-
-                    <ListItem
-                        image = {pic3}
-                        title = "Construction Toys"
-                    />
-
-                    <ListItem
-                        image = {pic4}
-                        title = "Tuff Trays"
-                    />
-
-                    <ListItem
-                        image = {pic5}
-                        title = "Music"
-                    />
-
-                    <ListItem
-                        image = {pic6}
-                        title = "Sand and Water"
-                    />
-
-                    <ListItem
-                        image = {pic7}
-                        title = "Dens"
-                    />
-
-                    <ListItem
-                        image = {pic8}
-                        title = "Literacy and Language"
-                    />
-
-                    <ListItem
-                        image = {pic9}
-                        title = "Maths"
-                    />
-
-                    <ListItem
-                        image = {pic10}
-                        title = "Science and Technology"
-                    />
-
-                    <ListItem
-                        image = {pic11}
-                        title = "Arts and Crafts"
-                    />
-
-                    <ListItem
-                        image = {pic12}
-                        title = "Sports"
-                    />
-
-                    <ListItem
-                        image = {pic13}
-                        title = "Playground"
-                    />
-
-                    <ListItem
-                        image = {pic14}
-                        title = "Art Drying Racks"
-                    />
-
-                    <ListItem
-                        image = {pic15}
-                        title = "Book Stands"
-                    />
-
-                    <ListItem
-                        image = {pic16}
-                        title = "Storage Trolleys"
-                    />
-
-                    <ListItem
-                        image = {pic17}
-                        title = "Welly Boot Racks"
-                    />
-
-                    <ListItem
-                        image = {pic18}
-                        title = "Easels"
-                    />
-
-                    <ListItem
-                        image = {pic19}
-                        title = "Furniture and accessories"
-                    />
-
-                    <ListItem
-                        image = {pic20}
-                        title = "Games and Puzzles"
-                    />
-
-                    <ListItem
-                        image = {pic21}
-                        title = "Outdoor"
-                    />
-
-                    <ListItem
-                        image = {pic22}
-                        title = "Role Play"
-                    />
-
-                    <ListItem
-                        image = {pic23}
-                        title = "Messy Play"
-                    />
-
-                    <ListItem
-                        image = {pic24}
-                        title = "Toys"
-                    />
-            </div>
-        </div>
-    </>
-  )
+        </>
+    )
 }
-
-
