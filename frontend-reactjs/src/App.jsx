@@ -15,6 +15,10 @@ import { AboutUs } from './components/AboutUs/AboutUs'
 import ToysDetailsPage from './components/ToysDetail/ToysDetailsPage'
 import PaymentSuccess from './components/PaymentSuccess/PaymentSuccess'
 import CancelPayment from './components/CancelPayment/CancelPayment'
+import ManageProduct from './components/Manage/ManageProduct'
+import ManageStaff from './components/Manage/ManageStaff'
+import RevenueSummary from './components/Manage/RevenueSummary'
+import Dashboard from './components/Dashboard/Dashboard'
 
 function App() {
     return (
@@ -31,7 +35,7 @@ function App() {
 
                 <Route path="/payment-success" element={<PaymentSuccess />} />
                 <Route path="/cancel-payment" element={<CancelPayment />} />
-
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route
                     path="/aboutUs"
                     element={
@@ -50,6 +54,10 @@ function App() {
                         </Layout>
                     }
                 />
+
+                <Route path="/manage-product" element={<ManageProduct />} />
+                <Route path="/manage-staff" element={<ManageStaff />} />
+                <Route path="/revenue" element={<RevenueSummary />} />
             </Routes>
         </Router>
     )
