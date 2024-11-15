@@ -146,14 +146,16 @@ function ProductList() {
     useEffect(() => {
         fetch('http://localhost:8080/api/v1/toy/all')
             .then((res) => {
-                console.log(res)
+                // console.log(res)
 
                 return res.json()
             })
             .then((data) => {
+                // console.log(data)
                 setProducts(data)
             })
     }, [])
+
     return (
         <div className="container mt-[60px]">
             <div className="text-black text-[24px] font-[700] mb-[24px]">

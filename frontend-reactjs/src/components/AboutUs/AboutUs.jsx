@@ -2,7 +2,7 @@ import { AboutUsItem } from "./AboutUsItem"
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-export const AboutUs = () => {
+const AboutUs = () => {
     AOS.init();
     return (
         <>
@@ -108,3 +108,5 @@ export const AboutUs = () => {
         </>
     )
 }
+
+export default AboutUs

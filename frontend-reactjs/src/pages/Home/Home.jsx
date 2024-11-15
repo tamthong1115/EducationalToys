@@ -1,10 +1,7 @@
-import React from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import ToysList from '../../components/ToysDetail/ToysList'
 import Banner from '../../components/Banner/Banner'
-import Hero from '../../components/Hero/Hero'
-import { ListOfToy } from '../../components/ListOfToy/ListOfToy'
-import { ListOfCategorys } from '../../components/ListOfCategorys/ListOfCategorys'
+import { ListOfCategories } from '../../components/ListOfToy/ListOfCategories.jsx'
+import { ListOfToys } from '../../components/ListOfCategorys/ListOfToys.jsx'
 import ProductList from '../../components/ProductList/ProductList'
 const Home = () => {
     return (
@@ -15,9 +12,9 @@ const Home = () => {
                 Welcome to the home page of our application.
             </p>
             <ToysList />
-            <ListOfToy />
+            <ListOfCategories />
             <ProductList />
-            <ListOfCategorys />
+            <ListOfToys />
         </div>
     )
 }

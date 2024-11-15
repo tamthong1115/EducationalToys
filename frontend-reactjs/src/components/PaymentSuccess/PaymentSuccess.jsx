@@ -1,4 +1,3 @@
-import React from 'react'
 import { useNavigate } from 'react-router-dom' // Nếu bạn sử dụng react-router để điều hướng
 
 const PaymentSuccess = () => {
