@@ -29,6 +29,18 @@ public class UserController {
         this.userDetailsService = userDetailsService;
     }
 
+
+    @GetMapping("/me")
+    public ResponseEntity<UserDetails> getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        return ResponseEntity.ok(userDetails);
+    }
+
     @PostMapping("/validate-token")
     public ResponseEntity<Boolean> validateToken(@RequestBody Map<String, String> tokenMap) {
         String token = tokenMap.get("token");

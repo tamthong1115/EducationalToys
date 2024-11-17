@@ -2,8 +2,10 @@ package com.toyapp.backend.service;
 
 import com.toyapp.backend.dto.auth.LoginRequestDTO;
 import com.toyapp.backend.dto.auth.RegisterRequestDTO;
+import com.toyapp.backend.model.Cart;
 import com.toyapp.backend.model.Role;
 import com.toyapp.backend.model.User;
+import com.toyapp.backend.repository.CartRepository;
 import com.toyapp.backend.repository.RoleRepository;
 import com.toyapp.backend.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,17 +24,20 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     
     private final AuthenticationManager authenticationManager;
+
+    private final CartRepository cartRepository;
     
     public AuthenticationService(
             AuthenticationManager authenticationManager,
             UserRepository userRepository,
             RoleRepository roleRepository,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder, CartRepository cartRepository
     ){
         this.authenticationManager = authenticationManager;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.passwordEncoder = passwordEncoder;
+        this.cartRepository = cartRepository;
     }
     
     public User register(RegisterRequestDTO input){
@@ -45,8 +50,14 @@ public class AuthenticationService {
                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 
         user.setRoles(Collections.singleton(role));
-        
-        return userRepository.save(user);
+
+       User savedUser = userRepository.save(user);
+
+        Cart cart = new Cart();
+        cart.setUser(savedUser);
+        cartRepository.save(cart);
+
+        return savedUser;
     }
     
     public User login(LoginRequestDTO loginRequestDTO){

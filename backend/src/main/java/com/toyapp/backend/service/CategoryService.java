@@ -2,9 +2,11 @@ package com.toyapp.backend.service;
 
 import com.toyapp.backend.dto.category.CategoryDTO;
 import com.toyapp.backend.dto.category.CreateCategoryDTO;
+import com.toyapp.backend.exception.CustomException;
 import com.toyapp.backend.model.Category;
 import com.toyapp.backend.repository.CategoryRepository;
 import lombok.Getter;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,12 +37,20 @@ public class CategoryService {
     }
 
     public CategoryDTO createCategory(CreateCategoryDTO createCategoryDTO) {
+        if (createCategoryDTO.getName() == null || createCategoryDTO.getName().isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "Category name is required");
+        }
+
         Category category = convertToEntity(createCategoryDTO);
         category = categoryRepository.save(category);
         return convertToDTO(category);
     }
 
     public Optional<CategoryDTO> updateCategory(Long id, CategoryDTO categoryDTO) {
+        if (categoryDTO.getName() == null || categoryDTO.getName().isEmpty()) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "Category name is required");
+        }
+
         if (categoryRepository.existsById(id)) {
             Category category = convertToEntity(categoryDTO);
             category.setId(id);

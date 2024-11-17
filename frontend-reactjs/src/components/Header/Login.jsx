@@ -36,7 +36,7 @@ const Login = ({
             navigate(location?.state?.from?.pathname || '/');
         },
         onError: (error) => {
-            console.error('Login failed', error);
+            toast.error(error.message || 'Login failed');
         },
     });
 
