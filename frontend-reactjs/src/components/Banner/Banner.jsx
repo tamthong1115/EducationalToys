@@ -6,7 +6,9 @@ import bannerImage from "../../../src/assets/images/Banner.png";
 
 const Banner = () => {
   return (
-    <div className="flex flex-col justify-center items-center py-20 bg-[#F8F8F8]"> {/* Set z-index of banner */}
+
+    <div className=" flex flex-col justify-center items-center py-20 bg-[#F8F8F8] "> {/* Set z-index of banner */}
+
       <img
         src={bannerImage} 
         alt="Banner"
