@@ -86,7 +86,7 @@ const UserChat = () => {
 
       {/* Chatbox */}
       {isOpen && (
-        <div className="fixed bottom-20 right-4 w-[40%] max-h-[70vh] bg-white shadow-lg rounded-lg flex flex-col z-50">
+        <div className="fixed bottom-20 right-4 w-[32%] max-h-[70vh] bg-white shadow-lg rounded-lg flex flex-col z-50">
           {/* Connection section */}
           {!connected && (
             <div className="flex flex-col p-4 mb-4">
@@ -108,7 +108,7 @@ const UserChat = () => {
 
           {/* Chat section */}
           {connected && (
-            <div className="flex flex-col p-4 h-full">
+            <div className="flex flex-col p-4 h-full ">
               <div className="border border-gray-300 flex-grow p-2 overflow-y-auto mb-4 h-[60vh]">
                 <ul className="list-none p-0">
                   {messages.map((msg, index) => (
