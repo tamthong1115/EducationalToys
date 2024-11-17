@@ -3,7 +3,7 @@ import {
     // ShopOutlined,
     ShoppingCartOutlined,
 } from '@ant-design/icons'
-import { Button, Dropdown, Form, Input, Menu } from 'antd'
+import { Button, Dropdown, Form, Input, Modal } from 'antd'
 import { useState } from 'react'
 import Login from './Login'
 import Register from './Register'
@@ -15,10 +15,13 @@ import { useAuth } from '../../context/AuthContext.jsx'
 import AccountMenu from './AccountMenu.jsx'
 
 const Header = () => {
-    const { isAuthenticated, logout } = useAuth()
+    const { isAuthenticated } = useAuth()
     const [buttonLogin, setButtonLogin] = useState(false)
     const [buttonRegister, setButtonRegister] = useState(false)
     const [buttonForgotPassword, setButtonForgotPassword] = useState(false)
+    const [isModalVisible, setIsModalVisible] = useState(false)
+    const [isLoginVisible, setIsLoginVisible] = useState(false)
+
     const navigate = useNavigate()
     const handleLogin = () => {
         setButtonLogin(!buttonLogin)
@@ -32,36 +35,45 @@ const Header = () => {
         setButtonForgotPassword(!buttonForgotPassword)
     }
 
+    const handleCartClick = () => {
+        if (!isAuthenticated) {
+            setIsModalVisible(true)
+        } else {
+            navigate('/cart')
+        }
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
         // Add your submit logic here
     }
 
-    const categories = (
-        <Menu>
-            <Menu.Item key="1">Toys</Menu.Item>
-            <Menu.Item key="2">Tuff Trays</Menu.Item>
-            <Menu.Item key="3">Behavioural</Menu.Item>
-            <Menu.Item key="4">Sensory</Menu.Item>
-            <Menu.Item key="5">Outdoors</Menu.Item>
-            <Menu.Item key="6">Sand & Water</Menu.Item>
-            <Menu.Item key="7">Strollers</Menu.Item>
-            <Menu.Item key="8">Curriculum</Menu.Item>
-            <Menu.Item key="9">Adventure</Menu.Item>
-            <Menu.Item key="10">School Equipment</Menu.Item>
-            <Menu.Item key="11">Furniture & Accessories</Menu.Item>
-            <Menu.Item key="12">CLEARANCE</Menu.Item>
-        </Menu>
-    )
+    const categories = [
+        { key: '1', label: 'Toys' },
+        { key: '2', label: 'Tuff Trays' },
+        { key: '3', label: 'Behavioural' },
+        { key: '4', label: 'Sensory' },
+        { key: '5', label: 'Outdoors' },
+        { key: '6', label: 'Sand & Water' },
+        { key: '7', label: 'Strollers' },
+        { key: '8', label: 'Curriculum' },
+        { key: '9', label: 'Adventure' },
+        { key: '10', label: 'School Equipment' },
+        { key: '11', label: 'Furniture & Accessories' },
+        { key: '12', label: 'CLEARANCE' },
+    ]
 
     return (
         <>
-            <header className="bg-white shadow-md">
+            <div className="bg-white shadow-md">
                 <div className="mx-auto flex flex-col md:flex-row gap-3 justify-between items-center p-4">
-                    <div className="text-2xl font-bold text-purple-700">
+                    <Link
+                        to={'/'}
+                        className="text-2xl font-bold text-purple-700"
+                    >
                         Educational Toys
-                    </div>
-                    <Dropdown overlay={categories} trigger={['click']}>
+                    </Link>
+                    <Dropdown menu={{ items: categories }} trigger={['click']}>
                         <Button className="bg-orange-500 text-white px-4 py-2 rounded">
                             All categories
                         </Button>
@@ -92,24 +104,7 @@ const Header = () => {
                                 About Us ?
                             </Link>
                         </span>
-                        <div className="flex items-center flex-col">
-                            {/* About us*/}
-                            <button
-                                className="mr-[10px] text-[10px] hover:italic hover:underline bg-[#757FE2] p-[8px] rounded-[10px] font-[400] h-[42px] inline-flex"
-                                id="button-login"
-                                onClick={handleLogin}
-                            >
-                                Log In
-                            </button>
-                            <button
-                                className="mr-[10px] text-[10px] hover:italic hover:underline bg-[#757FE2] p-[8px] rounded-[10px] font-[400] h-[42px] inline-flex"
-                                onClick={handleRegister}
-                            >
-                                Register
-                            </button>
-                            <button className="hidden text-[18px] hover:italic hover:underline font-[400]">
-                                Log Out
-                            </button>
+
                         <div className="flex items-center">
                             {!isAuthenticated ? (
                                 <>
@@ -127,12 +122,16 @@ const Header = () => {
                                     </button>
                                 </>
                             ) : (
-                               <AccountMenu/>
+                                <AccountMenu />
                             )}
                         </div>
-                        <Link to={'/cart'}>
-                            <ShoppingCartOutlined className="cursor-pointer" />
-                        </Link>
+
+                        <div
+                            onClick={handleCartClick}
+                            className="cursor-pointer"
+                        >
+                            <ShoppingCartOutlined />
+                        </div>
                     </div>
                 </div>
 
@@ -177,7 +176,8 @@ const Header = () => {
                         </a>
                     </div>
                 </nav>
-            </header>
+            </div>
+
             {buttonLogin && (
                 <Login
                     handleLogin={handleLogin}
@@ -192,6 +192,27 @@ const Header = () => {
                     handleSubmit={handleSubmit}
                 />
             )}
+            <Modal
+                title="Sign In Required"
+                open={isModalVisible}
+                onCancel={() => setIsModalVisible(false)}
+                footer={null}
+            >
+                {isLoginVisible ? (
+                    <Login handleLogin={() => setIsModalVisible(false)} />
+                ) : (
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Button
+                            type="primary"
+                            onClick={() => {
+                                setIsLoginVisible(true)
+                            }}
+                        >
+                            Sign In
+                        </Button>
+                    </div>
+                )}
+            </Modal>
         </>
     )
 }

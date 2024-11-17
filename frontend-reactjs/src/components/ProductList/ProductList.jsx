@@ -1,7 +1,12 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
-import { addCart } from '../../redux/cartSlice'
+import {useEffect, useState} from 'react'
+import {Link} from 'react-router-dom'
+import {useDispatch} from 'react-redux'
+import {addCart} from '../../redux/cartSlice'
+import {useAuth} from "../../context/AuthContext.jsx";
+import {Modal, Button} from 'antd'
+import {createCartItem} from "../../API/CartAPI.js";
+import {getAllToys} from "../../API/ToyAPI.js";
+import {toast} from "react-hot-toast";
 
 function ProductList() {
     const dispatch = useDispatch()
@@ -142,18 +147,40 @@ function ProductList() {
         },
     ]
     const [products, setProducts] = useState(initProduct)
+    const [isModalVisible, setIsModalVisible] = useState(false)
+
+    const {isAuthenticated} = useAuth();
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/v1/toy/all')
-            .then((res) => {
-                console.log(res)
-
-                return res.json()
-            })
-            .then((data) => {
-                setProducts(data)
-            })
+        getAllToys().then((data) => {
+            setProducts(data)
+        })
     }, [])
+
+    console.log(products)
+
+    const handleAddToCart = async (product) => {
+        if (isAuthenticated) {
+            try {
+                const quantity = 1
+                await createCartItem(product.id, quantity);
+                dispatch(addCart({id: product.id, quantity}))
+                toast.success('Item added to cart');
+            } catch (error) {
+                toast.error(error.message || 'Failed to add item to cart')
+            }
+
+        } else {
+            setIsModalVisible(true)
+        }
+    }
+
+    const handleOk = () => {
+        setIsModalVisible(false)
+    }
+
+    console.log(products)
+
     return (
         <div className="container mt-[60px]">
             <div className="text-black text-[24px] font-[700] mb-[24px]">
@@ -162,10 +189,9 @@ function ProductList() {
             <div className="grid grid-cols-4 gap-[20px]">
                 {products.map((product) => (
                     <Link
-                        to={`/product/${product.id}`}
-                        key={product.id}
-                        className="bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden w-64 mb-0"
-                        onMouseEnter={() => setHoveredToyId(product.id)}
+                        to={`/toydetail/${product.toyId}`}
+                        key={product.toyId}
+                        onMouseEnter={() => setHoveredToyId(product.toyId)}
                         onMouseLeave={() => setHoveredToyId(null)}
                     >
                         <img
@@ -208,7 +234,7 @@ function ProductList() {
                                         className="flex-1 bg-white text-red-600 border border-red-600 rounded py-1 text-xs font-semibold"
                                         onClick={(e) => {
                                             e.preventDefault()
-                                            dispatch(addCart(product))
+                                            handleAddToCart(product)
                                         }}
                                     >
                                         Add to cart
@@ -222,6 +248,22 @@ function ProductList() {
                     </Link>
                 ))}
             </div>
+            <Modal
+                title={
+                    <div className="flex justify-between items-center">
+                        <span>Login Required</span>
+                    </div>
+                }
+                open={isModalVisible}
+                onCancel={handleOk}
+                footer={[
+                    <Button key="submit" type="primary" onClick={handleOk}>
+                        OK
+                    </Button>,
+                ]}
+            >
+                <p>You need to log in to add items to the cart.</p>
+            </Modal>
         </div>
     )
 }

@@ -22,6 +22,7 @@ export const AuthProvider = ({ children }) => {
         queryFn: () => validateToken(token),
         retry: false,
         enabled: !!token,
+        refetchOnWindowFocus: false,
     });
 
     useEffect(() => {
@@ -57,7 +58,7 @@ export const AuthProvider = ({ children }) => {
     return (
         <AuthContext.Provider value={{
             user,
-            loading,
+            authLoading: loading,
             isAuthenticated : isAuthenticated && !loading && !isError,
             logout: logoutUser,
         }}>
