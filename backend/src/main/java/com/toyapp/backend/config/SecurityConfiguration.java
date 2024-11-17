@@ -39,10 +39,6 @@ public class SecurityConfiguration {
             "/ws/**"
     };
 
-//    public SecurityConfiguration(AuthenticationProvider authenticationProvider, JwtAuthenticationFilter jwtAuthenticationFilter) {
-//        this.authenticationProvider = authenticationProvider;
-//        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
-//    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -74,7 +70,7 @@ public class SecurityConfiguration {
 
         var cors = new CorsConfiguration();
         cors.setAllowedOrigins(java.util.List.of("*"));
-        cors.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE"));
+        cors.setAllowedMethods(java.util.List.of("GET", "POST", "PUT","PATCH", "DELETE"));
         cors.setAllowedHeaders(java.util.List.of("*"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

@@ -8,6 +8,7 @@ const ToysDetailsPage = () => {
     const [isExpanded, setIsExpanded] = useState(false)
     const [toy, setToy] = useState(null);
 
+    console.log(id)
 
     const toggleDescription = () => {
         setIsExpanded(!isExpanded)
@@ -16,7 +17,7 @@ const ToysDetailsPage = () => {
     useEffect(() => {
         const fetchToy = async () => {
             try {
-                const toyData = await getToyById(4);
+                const toyData = await getToyById(id);
                 setToy(toyData);
             } catch (error) {
                 console.error('Failed to fetch toy details:', error);
@@ -70,10 +71,10 @@ const ToysDetailsPage = () => {
                             Save 17%
                         </span>
                         <span className="line-through text-gray-500 ml-2">
-                            £29.99
+                            £{toy.price}
                         </span>
                         <span className="text-red-500 text-xl font-bold ml-2">
-                            £24.99
+                            £{toy.price}
                         </span>
                     </div>
                     <div className="text-gray-700 text-left">

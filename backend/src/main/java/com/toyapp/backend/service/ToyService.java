@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -54,9 +55,9 @@ public class ToyService {
     }
 
     @Transactional
-    public ToyResponseDTO getToyById(Long id) {
-        Toy toy = toyRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Toy not found"));
+    public ToyResponseDTO getToyResponseById(Long id) {
+        Optional<Toy> optionalToy = toyRepository.findById(id);
+        Toy toy = optionalToy.orElseThrow(() -> new RuntimeException("Toy not found"));
         List<String> imageUrls = toy.getImages().stream()
                 .map(ToyImage::getImageUrl)
                 .collect(Collectors.toList());
@@ -65,6 +66,13 @@ public class ToyService {
                 .collect(Collectors.toList());
         return mapToToyResponseDTO(toy, imageUrls, categories);
     }
+
+    @Transactional
+    public Optional<Toy> getToyById(Long id) {
+        return toyRepository.findById(id);
+    }
+
+
 
     @Transactional
     public List<ToyResponseDTO> getAllToys() {

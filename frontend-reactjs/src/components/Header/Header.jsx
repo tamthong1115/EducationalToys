@@ -3,7 +3,7 @@ import {
     // ShopOutlined,
     ShoppingCartOutlined,
 } from '@ant-design/icons'
-import { Button, Dropdown, Form, Input, Menu } from 'antd'
+import { Button, Dropdown, Form, Input, Modal } from 'antd'
 import { useState } from 'react'
 import Login from './Login'
 import Register from './Register'
@@ -19,6 +19,9 @@ const Header = () => {
     const [buttonLogin, setButtonLogin] = useState(false)
     const [buttonRegister, setButtonRegister] = useState(false)
     const [buttonForgotPassword, setButtonForgotPassword] = useState(false)
+    const [isModalVisible, setIsModalVisible] = useState(false)
+    const [isLoginVisible, setIsLoginVisible] = useState(false)
+
     const navigate = useNavigate()
     const handleLogin = () => {
         setButtonLogin(!buttonLogin)
@@ -32,11 +35,18 @@ const Header = () => {
         setButtonForgotPassword(!buttonForgotPassword)
     }
 
+    const handleCartClick = () => {
+        if (!isAuthenticated) {
+            setIsModalVisible(true)
+        } else {
+            navigate('/cart')
+        }
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault()
         // Add your submit logic here
     }
-
 
     const categories = [
         { key: '1', label: 'Toys' },
@@ -57,10 +67,13 @@ const Header = () => {
         <>
             <div className="bg-white shadow-md">
                 <div className="mx-auto flex flex-col md:flex-row gap-3 justify-between items-center p-4">
-                    <div className="text-2xl font-bold text-purple-700">
+                    <Link
+                        to={'/'}
+                        className="text-2xl font-bold text-purple-700"
+                    >
                         Educational Toys
-                    </div>
-                    <Dropdown menu={{items: categories}} trigger={['click']}>
+                    </Link>
+                    <Dropdown menu={{ items: categories }} trigger={['click']}>
                         <Button className="bg-orange-500 text-white px-4 py-2 rounded">
                             All categories
                         </Button>
@@ -109,12 +122,16 @@ const Header = () => {
                                     </button>
                                 </>
                             ) : (
-                               <AccountMenu/>
+                                <AccountMenu />
                             )}
                         </div>
-                        <Link to={'/cart'}>
-                            <ShoppingCartOutlined className="cursor-pointer" />
-                        </Link>
+
+                        <div
+                            onClick={handleCartClick}
+                            className="cursor-pointer"
+                        >
+                            <ShoppingCartOutlined />
+                        </div>
                     </div>
                 </div>
 
@@ -161,7 +178,6 @@ const Header = () => {
                 </nav>
             </div>
 
-
             {buttonLogin && (
                 <Login
                     handleLogin={handleLogin}
@@ -176,6 +192,27 @@ const Header = () => {
                     handleSubmit={handleSubmit}
                 />
             )}
+            <Modal
+                title="Sign In Required"
+                open={isModalVisible}
+                onCancel={() => setIsModalVisible(false)}
+                footer={null}
+            >
+                {isLoginVisible ? (
+                    <Login handleLogin={() => setIsModalVisible(false)} />
+                ) : (
+                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Button
+                            type="primary"
+                            onClick={() => {
+                                setIsLoginVisible(true)
+                            }}
+                        >
+                            Sign In
+                        </Button>
+                    </div>
+                )}
+            </Modal>
         </>
     )
 }

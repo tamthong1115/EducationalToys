@@ -20,7 +20,7 @@ public class ToyController {
 
     @GetMapping
     public ResponseEntity<ToyResponseDTO> getToyById(@RequestParam Long id) {
-        ToyResponseDTO toyResponseDTO = toyService.getToyById(id);
+        ToyResponseDTO toyResponseDTO = toyService.getToyResponseById(id);
         return new ResponseEntity<>(toyResponseDTO, HttpStatus.OK);
     }
 

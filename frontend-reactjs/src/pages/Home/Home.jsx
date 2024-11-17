@@ -1,4 +1,3 @@
-import ToysList from '../../components/ToysDetail/ToysList'
 import Banner from '../../components/Banner/Banner'
 import { ListOfCategories } from '../../components/ListOfToy/ListOfCategories.jsx'
 import { ListOfToys } from '../../components/ListOfCategorys/ListOfToys.jsx'
@@ -11,7 +10,7 @@ const Home = () => {
             <p className="text-lg">
                 Welcome to the home page of our application.
             </p>
-            <ToysList />
+            <ProductList />
             <ListOfCategories />
             <ProductList />
             <ListOfToys />

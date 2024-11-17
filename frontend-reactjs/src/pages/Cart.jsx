@@ -1,18 +1,100 @@
-import { useDispatch, useSelector } from 'react-redux'
-import {
-    removeCart,
-    incrementQuantity,
-    decrementQuantity,
-} from '../redux/cartSlice'
+// import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import {
+    getCartItems,
+    increaseCartItemQuantity,
+    decrementCartQuantity,
+    removeCartItem,
+} from '../API/CartAPI.js'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-hot-toast'
+import { useAuth } from '../context/AuthContext.jsx'
+import { Modal, Button } from 'antd'
+import Login from '../components/Header/Login.jsx'
 
 function Cart() {
-    const dispatch = useDispatch()
-    const cart = useSelector((state) => state.cart.cart)
+    const { isAuthenticated, authLoading } = useAuth()
+    const [cart, setCart] = useState([])
+    const [isModalVisible, setIsModalVisible] = useState(false)
+    const [isLoginVisible, setIsLoginVisible] = useState(false)
+    const queryClient = useQueryClient()
+
+    const { data, isLoading, error } = useQuery({
+        queryKey: ['cart'],
+        queryFn: getCartItems,
+    })
+
+    useEffect(() => {
+        if (!isAuthenticated && !authLoading) {
+            setIsModalVisible(true)
+        } else if (data) {
+            setCart(data)
+            // toast.success('Cart items fetched successfully')
+        }
+    }, [data, isAuthenticated, authLoading])
+
+    const increaseItemQuantityMutation = useMutation({
+        mutationFn: ({ cartItemId, quantity }) =>
+            increaseCartItemQuantity(cartItemId, quantity),
+        onSuccess: () => {
+            queryClient.invalidateQueries('cart')
+            toast.success('Cart item quantity updated successfully')
+        },
+        onError: (error) => {
+            toast.error(
+                error.message || 'Failed to increase cart item quantity'
+            )
+        },
+    })
+
+    const decrementItemQuantityMutation = useMutation({
+        mutationFn: ({ cartItemId, quantity }) =>
+            decrementCartQuantity(cartItemId, quantity),
+        onSuccess: () => {
+            queryClient.invalidateQueries('cart')
+            toast.success('Cart item quantity updated successfully')
+        },
+        onError: (error) => {
+            toast.error(
+                error.message || 'Failed to decrease cart item quantity'
+            )
+        },
+    })
+
+    const removeItemMutation = useMutation({
+        mutationFn: removeCartItem,
+        onSuccess: () => {
+            toast.success('Cart item removed successfully')
+        },
+        onError: (error) => {
+            toast.error(error.message || 'Failed to remove cart item')
+        },
+    })
+
+    const handleAddClick = (cartItemId, quantity) => {
+        increaseItemQuantityMutation.mutate({ cartItemId, quantity })
+    }
+
+    const handleDecreaseClick = (cartItemId, quantity) => {
+        decrementItemQuantityMutation.mutate({ cartItemId, quantity })
+    }
+
+    const handleRemoveClick = (cartItemId) => {
+        removeItemMutation.mutate(cartItemId)
+    }
 
     const totalPrice = cart.reduce((total, product) => {
         return total + product.price * product.quantity
     }, 0)
+
+    if (isLoading) {
+        return <p>Loading...</p>
+    }
+
+    if (error) {
+        toast.error(error.message || 'Failed to fetch cart items')
+    }
 
     return (
         <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-lg">
@@ -26,7 +108,7 @@ function Cart() {
                 <p className="text-3xl font-semibold">Giỏ hàng của bạn</p>
             </div>
 
-            {cart.length === 0 ? (
+            {!cart.length ? (
                 <p className="text-center text-gray-500 text-lg">
                     Giỏ hàng hiện tại đang rỗng
                 </p>
@@ -34,7 +116,7 @@ function Cart() {
                 <div className="flex flex-col gap-6">
                     {cart.map((product) => (
                         <div
-                            key={product.id}
+                            key={product.toyId}
                             className="border p-4 rounded-lg flex items-center justify-between shadow-sm"
                         >
                             <div className="flex items-center gap-6">
@@ -61,14 +143,13 @@ function Cart() {
                                     <button
                                         onClick={() => {
                                             if (product.quantity > 1) {
-                                                dispatch(
-                                                    decrementQuantity(
-                                                        product.id
-                                                    )
+                                                handleDecreaseClick(
+                                                    product.id,
+                                                    1
                                                 )
                                             } else {
-                                                alert(
-                                                    'Số lượng không thể dưới 1'
+                                                toast.error(
+                                                    'Quantity cannot be less than 1'
                                                 )
                                             }
                                         }}
@@ -81,9 +162,7 @@ function Cart() {
                                     </span>
                                     <button
                                         onClick={() =>
-                                            dispatch(
-                                                incrementQuantity(product.id)
-                                            )
+                                            handleAddClick(product.id, 1)
                                         }
                                         className="text-lg text-gray-700 hover:text-gray-500 transition-colors"
                                     >
@@ -101,7 +180,7 @@ function Cart() {
                                 </p>
                                 <button
                                     onClick={() =>
-                                        dispatch(removeCart(product.id))
+                                        handleRemoveClick(product.id)
                                     }
                                     className="text-black-600 hover:text-red-800 transition-colors"
                                 >
@@ -126,6 +205,24 @@ function Cart() {
                     </div>
                 </div>
             )}
+
+            <Modal
+                title="Sign In Required"
+                open={isModalVisible}
+                onCancel={() => setIsModalVisible(false)}
+                footer={null}
+            >
+                {isLoginVisible ? (
+                    <Login handleLogin={() => setIsModalVisible(false)} />
+                ) : (
+                    <Button
+                        type="primary"
+                        onClick={() => setIsLoginVisible(true)}
+                    >
+                        Sign In
+                    </Button>
+                )}
+            </Modal>
         </div>
     )
 }
