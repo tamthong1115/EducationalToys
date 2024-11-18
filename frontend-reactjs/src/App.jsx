@@ -9,6 +9,8 @@ import AdminChat from './components/ChatFunction/AdminChat';
 import PaymentSuccess from './components/PaymentSuccess/PaymentSuccess';
 import CancelPayment from './components/CancelPayment/CancelPayment';
 import CartPage from './pages/Cart';
+import { UserPages } from './components/UserPages/UserPages';
+import { Profile } from './components/Profile/Profile';
 
 function App() {
     return (
@@ -75,6 +77,24 @@ function App() {
                 element={
                     <Layout>
                         <CartPage/>
+                    </Layout>
+                }
+            />
+
+            <Route
+                path="/user"
+                element={
+                    <Layout>
+                        <UserPages/>
+                    </Layout>
+                }
+            />
+
+            <Route
+                path="/user/profile"
+                element={
+                    <Layout>
+                        <Profile/>
                     </Layout>
                 }
             />
