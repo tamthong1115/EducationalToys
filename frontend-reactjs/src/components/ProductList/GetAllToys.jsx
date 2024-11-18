@@ -1,10 +1,11 @@
-import {useEffect, useState} from 'react'
-import {useAuth} from "../../context/AuthContext.jsx";
-import {Modal, Button} from 'antd'
-import {createCartItem} from "../../API/CartAPI.js";
-import {getAllToys} from "../../API/ToyAPI.js";
-import {toast} from "react-hot-toast";
-import ProductItem from "./ProductItem.jsx";
+import { useEffect, useState } from 'react'
+import { useAuth } from '../../context/AuthContext.jsx'
+import { Modal, Button } from 'antd'
+import { createCartItem } from '../../API/CartAPI.js'
+import { getAllToys } from '../../API/ToyAPI.js'
+import { toast } from 'react-hot-toast'
+import ProductItem from './ProductItem.jsx'
+import { useQuery } from '@tanstack/react-query'
 
 function GetAllToys() {
     const [hoveredToyId, setHoveredToyId] = useState(null)
@@ -12,26 +13,32 @@ function GetAllToys() {
     const [products, setProducts] = useState([])
     const [isModalVisible, setIsModalVisible] = useState(false)
 
-    const {isAuthenticated} = useAuth();
+    const { isAuthenticated } = useAuth()
+
+    const { data, isLoading,isSuccess, isError } = useQuery({
+        queryKey: ['allToys'],
+        queryFn: getAllToys,
+    })
 
     useEffect(() => {
-        getAllToys().then((data) => {
+        if (data && isSuccess) {
             setProducts(data)
-        })
-    }, [])
+        } else if (isError) {
+            toast.error('Failed to fetch products')
+        }
+    }, [data, isError, isSuccess])
 
-    // console.log(products)
+    console.log(`products`, products)
 
     const handleAddToCart = async (product) => {
         if (isAuthenticated) {
             try {
                 const quantity = 1
-                await createCartItem(product.id, quantity);
-                toast.success('Item added to cart');
+                await createCartItem(product.id, quantity)
+                toast.success('Item added to cart')
             } catch (error) {
                 toast.error(error.message || 'Failed to add item to cart')
             }
-
         } else {
             setIsModalVisible(true)
         }
@@ -43,6 +50,10 @@ function GetAllToys() {
 
     // console.log(products)
 
+    if (isLoading) {
+        return <div>Loading...</div>
+    }
+
     return (
         <div className="container mt-[60px]">
             <div className="text-black text-[24px] font-[700] mb-[24px]">
@@ -50,8 +61,13 @@ function GetAllToys() {
             </div>
             <div className="grid grid-cols-4 gap-[20px]">
                 {products.map((product) => (
-                    <ProductItem product={product} setHoveredToyId={setHoveredToyId} handleAddToCart={handleAddToCart}
-                                 hoveredToyId={hoveredToyId} key={product.id}/>
+                    <ProductItem
+                        product={product}
+                        setHoveredToyId={setHoveredToyId}
+                        handleAddToCart={handleAddToCart}
+                        hoveredToyId={hoveredToyId}
+                        key={product.id}
+                    />
                 ))}
             </div>
             <Modal
