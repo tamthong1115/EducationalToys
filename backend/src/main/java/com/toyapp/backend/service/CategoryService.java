@@ -52,7 +52,7 @@ public class CategoryService {
 
     public void deleteCategory(Long id) {
         Optional<Category> category = categoryRepository.findById(id);
-        category.ifPresent(value -> cloudinaryService.deleteCategoryImage(value.getImage_url()));
+        category.ifPresent(value -> cloudinaryService.deleteImage(value.getImage_url()));
         categoryRepository.deleteById(id);
     }
     
