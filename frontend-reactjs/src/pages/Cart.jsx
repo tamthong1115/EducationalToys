@@ -1,26 +1,26 @@
 // import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {
     getCartItems,
     increaseCartItemQuantity,
     decrementCartQuantity,
     removeCartItem,
 } from '../API/CartAPI.js'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
-import { toast } from 'react-hot-toast'
-import { useAuth } from '../context/AuthContext.jsx'
-import { Modal, Button } from 'antd'
+import {useQuery, useMutation, useQueryClient} from '@tanstack/react-query'
+import {useEffect, useState} from 'react'
+import {toast} from 'react-hot-toast'
+import {useAuth} from '../context/AuthContext.jsx'
+import {Modal, Button} from 'antd'
 import Login from '../components/Header/Login.jsx'
 
 function Cart() {
-    const { isAuthenticated, authLoading } = useAuth()
+    const {isAuthenticated, authLoading} = useAuth()
     const [cart, setCart] = useState([])
     const [isModalVisible, setIsModalVisible] = useState(false)
     const [isLoginVisible, setIsLoginVisible] = useState(false)
     const queryClient = useQueryClient()
 
-    const { data, isLoading, error } = useQuery({
+    const {data, isLoading, error} = useQuery({
         queryKey: ['cart'],
         queryFn: getCartItems,
     })
@@ -35,10 +35,10 @@ function Cart() {
     }, [data, isAuthenticated, authLoading])
 
     const increaseItemQuantityMutation = useMutation({
-        mutationFn: ({ cartItemId, quantity }) =>
+        mutationFn: ({cartItemId, quantity}) =>
             increaseCartItemQuantity(cartItemId, quantity),
-        onSuccess: () => {
-            queryClient.invalidateQueries('cart')
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({queryKey: ['cart']})
             toast.success('Cart item quantity updated successfully')
         },
         onError: (error) => {
@@ -49,10 +49,10 @@ function Cart() {
     })
 
     const decrementItemQuantityMutation = useMutation({
-        mutationFn: ({ cartItemId, quantity }) =>
+        mutationFn: ({cartItemId, quantity}) =>
             decrementCartQuantity(cartItemId, quantity),
-        onSuccess: () => {
-            queryClient.invalidateQueries('cart')
+        onSuccess: async () => {
+            await queryClient.invalidateQueries({queryKey: ['cart']})
             toast.success('Cart item quantity updated successfully')
         },
         onError: (error) => {
@@ -73,11 +73,11 @@ function Cart() {
     })
 
     const handleAddClick = (cartItemId, quantity) => {
-        increaseItemQuantityMutation.mutate({ cartItemId, quantity })
+        increaseItemQuantityMutation.mutate({cartItemId, quantity})
     }
 
     const handleDecreaseClick = (cartItemId, quantity) => {
-        decrementItemQuantityMutation.mutate({ cartItemId, quantity })
+        decrementItemQuantityMutation.mutate({cartItemId, quantity})
     }
 
     const handleRemoveClick = (cartItemId) => {
@@ -199,7 +199,8 @@ function Cart() {
 
                     {/* Checkout */}
                     <div className="flex justify-center mt-6">
-                        <button className="bg-green-600 text-white px-8 py-3 rounded-md flex items-center gap-3 font-semibold hover:bg-green-700 transition-colors">
+                        <button
+                            className="bg-green-600 text-white px-8 py-3 rounded-md flex items-center gap-3 font-semibold hover:bg-green-700 transition-colors">
                             <span>Checkout Security</span>
                         </button>
                     </div>
@@ -213,7 +214,7 @@ function Cart() {
                 footer={null}
             >
                 {isLoginVisible ? (
-                    <Login handleLogin={() => setIsModalVisible(false)} />
+                    <Login handleLogin={() => setIsModalVisible(false)}/>
                 ) : (
                     <Button
                         type="primary"
