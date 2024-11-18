@@ -1,35 +1,33 @@
-import React, {useEffect, useState} from 'react'
-import ProductCard from './ProductCard'
+import { useEffect, useState } from 'react'
 import FilterSection from './FilterSection'
-import {Button, Dropdown, Input, Menu, Pagination} from 'antd'
+import { Input, Pagination } from 'antd'
 import './searchList.css'
-import {useSearchParams} from "react-router-dom";
-import {searchToys} from '../../API/ToyAPI.js'
-import {useQuery} from "@tanstack/react-query";
-import ProductList from "../ProductList/ProductList.jsx";
+import { useSearchParams } from 'react-router-dom'
+import { searchToys } from '../../API/ToyAPI.js'
+import { useQuery } from '@tanstack/react-query'
+import ProductList from '../ProductList/ProductList.jsx'
 
 const SearchList = () => {
-
     const [searchQuery] = useSearchParams()
-    const q = searchQuery.get('q');
-    const [currentPage, setCurrentPage] = useState(1);
+    const q = searchQuery.get('q')
+    const [currentPage, setCurrentPage] = useState(1)
 
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchResults, setSearchResults] = useState([])
 
-    const {data, error, isLoading, isSuccess} = useQuery({
+    const { data, error, isLoading, isSuccess } = useQuery({
         queryKey: ['search', q, currentPage],
         queryFn: () => searchToys(q, currentPage),
-    });
+    })
 
     useEffect(() => {
         if (isSuccess) {
-            setSearchResults(data);
+            setSearchResults(data)
         }
-    }, [data, isSuccess]);
+    }, [data, isSuccess])
 
     const handlePageChange = (page) => {
-        setCurrentPage(page);
-    };
+        setCurrentPage(page)
+    }
 
     if (isLoading) {
         return <div>Loading...</div>
@@ -56,20 +54,30 @@ const SearchList = () => {
                 </span>
             </nav>
 
-            <Input.Search placeholder="Search" className="mt-6"/>
+            <Input.Search placeholder="Search" className="mt-6" />
 
             <h2 className="self-start mt-9 text-lg font-extrabold leading-none text-stone-900">
                 Filters
             </h2>
 
             <div className="flex gap-5 justify-between mt-3">
-                <FilterSection/>
-                <section className="flex flex-wrap gap-5 justify-between">
-                    <ProductList products={searchResults}/>
-                </section>
+                <FilterSection />
+                {(searchResults.length === 0 && (
+                    <div className="flex justify-center items-center w-full">
+                        <p className="text-center">Sorry, no results found</p>
+                    </div>
+                )) || (
+                    <section className="flex flex-wrap gap-5 justify-between">
+                        <ProductList products={searchResults} />
+                    </section>
+                )}
             </div>
             <div className="flex justify-center mt-4">
-                <Pagination defaultCurrent={1} current={currentPage} onChange={handlePageChange}/>
+                <Pagination
+                    defaultCurrent={1}
+                    current={currentPage}
+                    onChange={handlePageChange}
+                />
             </div>
         </main>
     )
