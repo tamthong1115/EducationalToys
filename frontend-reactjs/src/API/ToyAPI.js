@@ -6,10 +6,6 @@ export const getToyById = async (id) => {
             params: { id },
         })
 
-        if (!response.ok) {
-            throw new Error('Failed to fetch toy by ID')
-        }
-        
         return response.data
     } catch (error) {
         throw new Error(
@@ -22,11 +18,11 @@ export const getAllToys = async () => {
     try {
         const response = await axiosInstance.get(`/toy/all`)
 
-        if (!response.ok) {
+        if (response.status >= 200 && response.status < 300) {
+            return response.data
+        } else {
             throw new Error('Failed to fetch all toys')
         }
-
-        return response.data
     } catch (error) {
         throw new Error(
             error.response?.data?.message || 'Failed to fetch all toys'
@@ -40,11 +36,10 @@ export const searchToys = async (q, page) => {
             params: { q, page },
         })
 
-        if (!response.ok) {
-            throw new Error('Failed to search toys')
+        if (response.status >= 200 && response.status < 300) {
+            return response.data
         }
 
-        return response.data
     } catch (error) {
         throw new Error(
             error.response?.data?.message || 'Failed to search toys'

@@ -7,9 +7,6 @@ export const register = async (registerRequestDTO) => {
             registerRequestDTO
         )
 
-        if (!response.ok) {
-            throw new Error('Registration failed')
-        }
 
         return response.data
     } catch (error) {
@@ -24,13 +21,12 @@ export const login = async (loginRequestDTO) => {
             loginRequestDTO
         )
 
-        if (!response.ok) {
+        if (response.status >= 200 && response.status < 300) {
+            await localStorage.setItem('token', response.data.token)
+            return response.data
+        } else {
             throw new Error('Login failed')
         }
-
-        await localStorage.setItem('token', response.data.token)
-
-        return response.data
     } catch (error) {
         throw new Error(error.response?.data?.message || 'Login failed')
     }

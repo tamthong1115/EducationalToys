@@ -49,12 +49,6 @@ export const increaseCartItemQuantity = async (cartItemId, quantity) => {
             }
         )
 
-
-        if(!response.ok) {
-            throw new Error('Failed to increase cart item quantity')
-        }
-
-
         return response.data
     } catch (error) {
         throw new Error(
@@ -77,9 +71,6 @@ export const decrementCartQuantity = async (cartItemId, quantity) => {
             }
         )
 
-        if(!response.ok) {
-            throw new Error('Failed to decrease cart item quantity')
-        }
 
         return response.data
     } catch (error) {
@@ -95,10 +86,6 @@ export const removeCartItem = async (cartItemId) => {
         const response = await axiosInstance.delete(
             `/user/cart/remove/${cartItemId}`
         )
-
-        if(!response.ok) {
-            throw new Error('Failed to remove cart item')
-        }
         
         return response.data
     } catch (error) {
