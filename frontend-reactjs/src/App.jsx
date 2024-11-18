@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import {Routes, Route} from 'react-router-dom';
 import Layout from './layouts/Layout';
 import Home from './pages/Home/Home';
 import SearchList from './components/SearchList/SearchList';
@@ -17,8 +17,8 @@ function App() {
                 path="/"
                 element={
                     <Layout>
-                        <Home />
-                        <UserChat />
+                        <Home/>
+                        <UserChat/>
                     </Layout>
                 }
             />
@@ -26,7 +26,7 @@ function App() {
                 path="/Admin"
                 element={
                     <Layout>
-                        <AdminChat />
+                        <AdminChat/>
                     </Layout>
                 }
             />
@@ -34,7 +34,7 @@ function App() {
                 path="/payment-success"
                 element={
                     <Layout>
-                        <PaymentSuccess />
+                        <PaymentSuccess/>
                     </Layout>
                 }
             />
@@ -42,7 +42,7 @@ function App() {
                 path="/cancel-payment"
                 element={
                     <Layout>
-                        <CancelPayment />
+                        <CancelPayment/>
                     </Layout>
                 }
             />
@@ -50,7 +50,7 @@ function App() {
                 path="/aboutUs"
                 element={
                     <Layout>
-                        <AboutUs />
+                        <AboutUs/>
                     </Layout>
                 }
             />
@@ -58,7 +58,7 @@ function App() {
                 path="/toydetail/:id"
                 element={
                     <Layout>
-                        <ToysDetailsPage />
+                        <ToysDetailsPage/>
                     </Layout>
                 }
             />
@@ -66,7 +66,7 @@ function App() {
                 path="/search"
                 element={
                     <Layout>
-                        <SearchList />
+                        <SearchList/>
                     </Layout>
                 }
             />
@@ -74,7 +74,7 @@ function App() {
                 path="/cart"
                 element={
                     <Layout>
-                        <CartPage />
+                        <CartPage/>
                     </Layout>
                 }
             />

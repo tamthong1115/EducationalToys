@@ -3,6 +3,8 @@ package com.toyapp.backend.controller;
 
 import com.toyapp.backend.dto.toy.ToyResponseDTO;
 import com.toyapp.backend.service.ToyService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +29,15 @@ public class ToyController {
     @GetMapping("/all")
     public ResponseEntity<List<ToyResponseDTO>> getAllToys() {
         List<ToyResponseDTO> toys = toyService.getAllToys();
+        return new ResponseEntity<>(toys, HttpStatus.OK);
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ToyResponseDTO>> searchToys(
+            @RequestParam(required = false, defaultValue = "") String q,
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "8") int size) {
+        List<ToyResponseDTO> toys = toyService.searchToys(q, PageRequest.of(page - 1, size));
         return new ResponseEntity<>(toys, HttpStatus.OK);
     }
 }

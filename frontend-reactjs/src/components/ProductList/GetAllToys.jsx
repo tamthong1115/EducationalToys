@@ -2,15 +2,23 @@ import {useEffect, useState} from 'react'
 import {useAuth} from "../../context/AuthContext.jsx";
 import {Modal, Button} from 'antd'
 import {createCartItem} from "../../API/CartAPI.js";
+import {getAllToys} from "../../API/ToyAPI.js";
 import {toast} from "react-hot-toast";
 import ProductItem from "./ProductItem.jsx";
 
-function ProductList({products}) {
+function GetAllToys() {
     const [hoveredToyId, setHoveredToyId] = useState(null)
+
+    const [products, setProducts] = useState([])
     const [isModalVisible, setIsModalVisible] = useState(false)
 
     const {isAuthenticated} = useAuth();
 
+    useEffect(() => {
+        getAllToys().then((data) => {
+            setProducts(data)
+        })
+    }, [])
 
     // console.log(products)
 
@@ -66,4 +74,4 @@ function ProductList({products}) {
     )
 }
 
-export default ProductList
+export default GetAllToys

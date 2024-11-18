@@ -5,6 +5,8 @@ import com.toyapp.backend.dto.toy.ToyResponseDTO;
 import com.toyapp.backend.model.*;
 import com.toyapp.backend.repository.*;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -23,13 +25,13 @@ public class ToyService {
     private final CategoryRepository categoryRepository;
     private final ToyCategoryRepository toyCategoryRepository;
     private final UserRepository userRepository;
-    
+
     public ToyService(
             ToyRepository toyRepository,
             ToyImageRepository toyImageRepository,
             CloudinaryService cloudinaryService,
-            CategoryRepository categoryRepository, 
-            ToyCategoryRepository toyCategoryRepository, 
+            CategoryRepository categoryRepository,
+            ToyCategoryRepository toyCategoryRepository,
             UserRepository userRepository) {
         this.toyRepository = toyRepository;
         this.toyImageRepository = toyImageRepository;
@@ -73,7 +75,6 @@ public class ToyService {
     }
 
 
-
     @Transactional
     public List<ToyResponseDTO> getAllToys() {
         List<Toy> toys = toyRepository.findAll();
@@ -111,7 +112,7 @@ public class ToyService {
         }
 
         List<String> imageUrls = uploadImages(createToyDTO.getImages(), toy);
-        
+
         // Remove old categories that are not in the new list
         List<Category> newCategories = getCategories(createToyDTO.getCategoryIds());
         List<ToyCategory> oldCategories = toy.getCategories();
@@ -120,8 +121,8 @@ public class ToyService {
                 toyCategoryRepository.delete(oldCategory);
             }
         }
-        
-        
+
+
         List<Category> categories = getCategories(createToyDTO.getCategoryIds());
         saveToyCategories(toy, categories);
 
@@ -129,17 +130,32 @@ public class ToyService {
     }
 
     @Transactional
+    public List<ToyResponseDTO> searchToys(String query, Pageable pageable) {
+        query = query.toLowerCase();
+        Page<Toy> toys = toyRepository.searchByNameOrDescription(query, pageable);
+        List<Toy> content = toys.getContent();
+        return content.stream()
+                .map(toy -> mapToToyResponseDTO(toy, toy.getImages().stream()
+                                .map(ToyImage::getImageUrl)
+                                .collect(Collectors.toList()),
+                        toy.getCategories().stream()
+                                .map(ToyCategory::getCategory)
+                                .collect(Collectors.toList())))
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
     public void deleteToy(Long id) {
         Toy toy = toyRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Toy not found"));
         toyRepository.delete(toy);
-        
+
         List<ToyImage> toyImages = toy.getImages();
         for (ToyImage toyImage : toyImages) {
             cloudinaryService.deleteImage(toyImage.getImageUrl());
             toyImageRepository.delete(toyImage);
         }
-        
+
         List<ToyCategory> toyCategories = toy.getCategories();
         toyCategoryRepository.deleteAll(toyCategories);
     }
@@ -220,8 +236,6 @@ public class ToyService {
                 toy.getSupplier().getId()
         );
     }
-    
-    
-  
+
 
 }
