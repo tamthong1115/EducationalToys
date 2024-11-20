@@ -1,17 +1,20 @@
-import {Routes, Route} from 'react-router-dom';
-import Layout from './layouts/Layout';
-import Home from './pages/Home/Home';
-import SearchList from './components/SearchList/SearchList';
-import AboutUs from './components/AboutUs/AboutUs';
-import ToysDetailsPage from './components/ToysDetail/ToysDetailsPage';
-import UserChat from './components/ChatFunction/UserChat';
-import AdminChat from './components/ChatFunction/AdminChat';
-import PaymentSuccess from './components/PaymentSuccess/PaymentSuccess';
-import CancelPayment from './components/CancelPayment/CancelPayment';
-import CartPage from './pages/Cart';
-import { UserPages } from './components/UserPages/UserPages';
-import { Profile } from './components/Profile/Profile';
-
+import { Routes, Route } from 'react-router-dom'
+import Layout from './layouts/Layout'
+import Home from './pages/Home/Home'
+import SearchList from './components/SearchList/SearchList'
+import AboutUs from './components/AboutUs/AboutUs'
+import ToysDetailsPage from './components/ToysDetail/ToysDetailsPage'
+import UserChat from './components/ChatFunction/UserChat'
+import AdminChat from './components/ChatFunction/AdminChat'
+import PaymentSuccess from './components/PaymentSuccess/PaymentSuccess'
+import CancelPayment from './components/CancelPayment/CancelPayment'
+import CartPage from './pages/Cart'
+import { UserPages } from './components/UserPages/UserPages'
+import { Profile } from './components/Profile/Profile'
+import Dashboard from './components/Dashboard/Dashboard'
+import ManageProduct from './components/Manage/ManageProduct'
+import ManageStaff from './components/Manage/ManageStaff'
+import RevenueSummary from './components/Manage/RevenueSummary'
 function App() {
     return (
         <Routes>
@@ -19,8 +22,8 @@ function App() {
                 path="/"
                 element={
                     <Layout>
-                        <Home/>
-                        <UserChat/>
+                        <Home />
+                        <UserChat />
                     </Layout>
                 }
             />
@@ -28,7 +31,7 @@ function App() {
                 path="/Admin"
                 element={
                     <Layout>
-                        <AdminChat/>
+                        <AdminChat />
                     </Layout>
                 }
             />
@@ -36,7 +39,7 @@ function App() {
                 path="/payment-success"
                 element={
                     <Layout>
-                        <PaymentSuccess/>
+                        <PaymentSuccess />
                     </Layout>
                 }
             />
@@ -44,7 +47,7 @@ function App() {
                 path="/cancel-payment"
                 element={
                     <Layout>
-                        <CancelPayment/>
+                        <CancelPayment />
                     </Layout>
                 }
             />
@@ -52,7 +55,7 @@ function App() {
                 path="/aboutUs"
                 element={
                     <Layout>
-                        <AboutUs/>
+                        <AboutUs />
                     </Layout>
                 }
             />
@@ -60,7 +63,7 @@ function App() {
                 path="/toydetail/:id"
                 element={
                     <Layout>
-                        <ToysDetailsPage/>
+                        <ToysDetailsPage />
                     </Layout>
                 }
             />
@@ -68,7 +71,7 @@ function App() {
                 path="/search"
                 element={
                     <Layout>
-                        <SearchList/>
+                        <SearchList />
                     </Layout>
                 }
             />
@@ -76,7 +79,7 @@ function App() {
                 path="/cart"
                 element={
                     <Layout>
-                        <CartPage/>
+                        <CartPage />
                     </Layout>
                 }
             />
@@ -85,21 +88,29 @@ function App() {
                 path="/user"
                 element={
                     <Layout>
-                        <UserPages/>
+                        <UserPages />
                     </Layout>
                 }
             />
+            <Route path="/payment-success" element={<PaymentSuccess />} />
+
+            <Route path="/cancel-payment" element={<CancelPayment />} />
+            <Route path="/dashboard" element={<Dashboard />} />
 
             <Route
                 path="/user/profile"
                 element={
                     <Layout>
-                        <Profile/>
+                        <Profile />
                     </Layout>
                 }
             />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/manage-product" element={<ManageProduct />} />
+            <Route path="/manage-staff" element={<ManageStaff />} />
+            <Route path="/revenue" element={<RevenueSummary />} />
         </Routes>
-    );
+    )
 }
 
-export default App;
+export default App
