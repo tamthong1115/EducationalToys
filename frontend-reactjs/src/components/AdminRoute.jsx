@@ -11,7 +11,9 @@ const AdminRoute = ({element}) => {
         return LoadingComponent();
     }
 
-    return isAdmin() ? element : <Navigate to="/"/>;
+    console.log(`authLoading: ${authLoading}, isAdmin: ${isAdmin()}`);
+
+    return isAdmin() ? element : <Navigate to="/about-us"/>;
 };
 
 // validate props

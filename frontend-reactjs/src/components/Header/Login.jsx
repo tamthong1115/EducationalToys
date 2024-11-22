@@ -31,11 +31,13 @@ const Login = ({
             localStorage.setItem('token', data.token);
             // Refetch or invalidate the query to re-validate the token
             await queryClient.invalidateQueries({queryKey: ['validateToken']});
+            await queryClient.invalidateQueries({queryKey: ['roles']});
             handleLogin()
             toast.success('Login successfully');
 
-            if (data.isAdmin) {
-                navigate('/dashboard')
+            console.log(`data: ${JSON.stringify(data)}`);
+            if (data.admin) {
+                await navigate('/dashboard')
             } else {
                 navigate(location?.state?.from?.pathname || '/');
             }
