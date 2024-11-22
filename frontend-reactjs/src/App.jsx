@@ -18,8 +18,10 @@ import RevenueSummary from './components/Manage/RevenueSummary'
 import Checkout from "./pages/Checkout/Checkout.jsx";
 import Orders from "./pages/Order/Orders.jsx";
 import AdminRoute from "./components/AdminRoute.jsx";
+import {useAuth} from "./context/AuthContext.jsx";
 
 function App() {
+    const {isAuthenticated} = useAuth();
     return (
         <Routes>
             <Route
@@ -106,27 +108,28 @@ function App() {
                 }
             />
 
-            <Route
-                path="/user"
-                element={
-                    <Layout>
-                        <UserPages/>
-                    </Layout>
-                }
-            />
-            <Route path="/payment-success" element={<PaymentSuccess/>}/>
-
-            <Route path="/cancel-payment" element={<CancelPayment/>}/>
-            {/*<Route path="/dashboard" element={<Dashboard/>}/>*/}
-
-            <Route
-                path="/user/profile"
-                element={
-                    <Layout>
-                        <Profile/>
-                    </Layout>
-                }
-            />
+            {isAuthenticated && (
+                <>
+                    <Route
+                        path="/user"
+                        element={
+                            <Layout>
+                                <UserPages/>
+                            </Layout>
+                        }
+                    />
+                    <Route path="/payment-success" element={<PaymentSuccess/>}/>
+                    <Route path="/cancel-payment" element={<CancelPayment/>}/>
+                    <Route
+                        path="/user/profile"
+                        element={
+                            <Layout>
+                                <Profile/>
+                            </Layout>
+                        }
+                    />
+                </>
+            )}
             <Route path="/dashboard" element={<AdminRoute element={<Dashboard/>}/>}/>
             <Route path="/manage-product" element={<AdminRoute element={<ManageProduct/>}/>}/>
             <Route path="/manage-staff" element={<AdminRoute element={<ManageStaff/>}/>}/>

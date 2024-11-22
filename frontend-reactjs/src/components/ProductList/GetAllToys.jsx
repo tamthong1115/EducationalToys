@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
-import { useAuth } from '../../context/AuthContext.jsx'
-import { Modal, Button } from 'antd'
-import { createCartItem } from '../../API/CartAPI.js'
-import { getAllToys } from '../../API/ToyAPI.js'
-import { toast } from 'react-hot-toast'
+import {useEffect, useState} from 'react'
+import {useAuth} from '../../context/AuthContext.jsx'
+import {Modal, Button} from 'antd'
+import {createCartItem} from '../../API/CartAPI.js'
+import {getAllToys} from '../../API/ToyAPI.js'
+import {toast} from 'react-hot-toast'
 import ProductItem from './ProductItem.jsx'
-import { useQuery } from '@tanstack/react-query'
+import {useQuery} from '@tanstack/react-query'
+import LoadingComponent from "../Loading/LoadingComponent.jsx";
 
 function GetAllToys() {
     const [hoveredToyId, setHoveredToyId] = useState(null)
@@ -13,9 +14,9 @@ function GetAllToys() {
     const [products, setProducts] = useState([])
     const [isModalVisible, setIsModalVisible] = useState(false)
 
-    const { isAuthenticated } = useAuth()
+    const {isAuthenticated} = useAuth()
 
-    const { data, isLoading,isSuccess, isError } = useQuery({
+    const {data, isLoading, isSuccess, isError} = useQuery({
         queryKey: ['allToys'],
         queryFn: getAllToys,
     })
@@ -51,7 +52,7 @@ function GetAllToys() {
     // console.log(products)
 
     if (isLoading) {
-        return <div>Loading...</div>
+        return <LoadingComponent/>
     }
 
     return (

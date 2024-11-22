@@ -150,6 +150,17 @@ public class CartItemService {
     public StripePaymentResponseDTO createPaymentIntent(StripePaymentRequestDTO stripePaymentRequestDTO) {
         Long userId = UserService.getCurrentUserId()
                 .orElseThrow(() -> new RuntimeException("Error: User is not authenticated."));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Error: User not found."));
+
+        if (user.getAddress() == null || user.getAddress().isEmpty()) {
+            throw new RuntimeException("Error: User address is missing.");
+        }
+
+        if (user.getPhone() == null || user.getPhone().isEmpty()) {
+            throw new RuntimeException("Error: User phone number is missing.");
+        }
+
         Cart cart = cartService.getCartByUserId(userId)
                 .orElseThrow(() -> new RuntimeException("Error: Cart is not found."));
 

@@ -1,8 +1,12 @@
 package com.toyapp.backend.controller.user;
 
 import com.toyapp.backend.dto.user.UserDTO;
+import com.toyapp.backend.model.Role;
+import com.toyapp.backend.model.User;
+import com.toyapp.backend.repository.UserRepository;
 import com.toyapp.backend.service.AuthenticationService;
 import com.toyapp.backend.service.JwtService;
+import com.toyapp.backend.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -23,11 +27,13 @@ public class UserController {
     private final JwtService jwtService;
     private final AuthenticationService authenticationService;
     private final UserDetailsService userDetailsService;
+    private final UserRepository userRepository;
 
-    public UserController(JwtService jwtService, AuthenticationService authenticationService, UserDetailsService userDetailsService) {
+    public UserController(JwtService jwtService, AuthenticationService authenticationService, UserDetailsService userDetailsService, UserRepository userRepository) {
         this.jwtService = jwtService;
         this.authenticationService = authenticationService;
         this.userDetailsService = userDetailsService;
+        this.userRepository = userRepository;
     }
 
 
@@ -63,5 +69,36 @@ public class UserController {
         return ResponseEntity.ok(roles);
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+        }
+
+        String userEmail = authentication.getName();
+        User user = userRepository.findByEmail(userEmail)
+                .orElseThrow(() -> new RuntimeException("Error: User not found."));
+
+        user.setName(userDTO.getName());
+        user.setPhone(userDTO.getPhone());
+        user.setAddress(userDTO.getAddress());
+        user.setRewardPoints(userDTO.getRewardPoints());
+
+        userRepository.save(user);
+
+        UserDTO updatedUserDTO = new UserDTO();
+        updatedUserDTO.setId(user.getId());
+        updatedUserDTO.setName(user.getName());
+        updatedUserDTO.setEmail(user.getEmail());
+        updatedUserDTO.setPhone(user.getPhone());
+        updatedUserDTO.setAddress(user.getAddress());
+        updatedUserDTO.setRewardPoints(user.getRewardPoints());
+        updatedUserDTO.setRoles(user.getRoles().stream()
+                .map(Role::getName)
+                .collect(Collectors.joining(", ")));
+
+        return ResponseEntity.ok(updatedUserDTO);
+    }
 
 }

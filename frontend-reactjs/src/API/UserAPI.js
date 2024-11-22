@@ -35,3 +35,15 @@ export const getRoles = async () => {
         )
     }
 }
+
+
+export const updateUserProfile = async (data) => {
+    try {
+        const response = await axiosInstance.put('/user/update', data)
+        return response.data
+    } catch (error) {
+        throw new Error(
+            error.response?.data?.message || 'Failed to update user profile'
+        )
+    }
+}

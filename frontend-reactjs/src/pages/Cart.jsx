@@ -14,6 +14,7 @@ import {Modal, Button} from 'antd'
 import Login from '../components/Header/Login.jsx'
 import LoadingComponent from '../components/Loading/LoadingComponent.jsx'
 import {useNavigate} from 'react-router-dom';
+import {getUserProfile} from "../API/UserAPI.js";
 
 function Cart() {
     const {isAuthenticated, authLoading} = useAuth()
@@ -34,6 +35,11 @@ function Cart() {
         queryFn: getCartItems,
         enabled: isAuthenticated
     })
+
+    const {data: user} = useQuery({
+        queryKey: ['user'],
+        queryFn: getUserProfile,
+    });
 
 
     // console.log(`cart`, cart, `cartData`, cartData)
@@ -110,9 +116,12 @@ function Cart() {
     }
 
     const handleCheckout = () => {
+        if (!user.phone || !user.address) {
+            toast.error('Please update your profile with a valid phone number and address before proceeding to checkout.');
+            return;
+        }
         navigate('/checkout', {state: {cartItemIds: selectedItems}});
     };
-
     if (isLoading || authLoading || !cart) {
         return LoadingComponent()
     }
@@ -130,7 +139,7 @@ function Cart() {
                 >
                     Home
                 </Link>
-                <p className="text-3xl font-semibold">Giỏ hàng của bạn</p>
+                <p className="text-3xl font-semibold">Your Cart</p>
             </div>
 
             {!cart.length ? (
@@ -225,7 +234,7 @@ function Cart() {
                     ))}
 
                     <div className="flex justify-between items-center mt-6 border-t pt-4">
-                        <p className="text-xl font-semibold">Tổng tiền:</p>
+                        <p className="text-xl font-semibold">Total Price:</p>
                         <p className="text-2xl font-bold text-green-600">
                             £{selectedTotalPrice.toFixed(2) || 0}
                         </p>
