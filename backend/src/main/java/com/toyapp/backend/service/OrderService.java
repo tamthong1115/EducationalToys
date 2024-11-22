@@ -4,14 +4,12 @@ import com.toyapp.backend.dto.order.OrderDTO;
 import com.toyapp.backend.dto.order.OrderItemDTO;
 import com.toyapp.backend.model.Order;
 import com.toyapp.backend.model.OrderItem;
-import com.toyapp.backend.model.User;
 import com.toyapp.backend.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 import com.toyapp.backend.model.ToyImage;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,12 +22,17 @@ public class OrderService {
     }
 
     public List<OrderDTO> getAllOrders() {
-        String userEmail = UserService.getCurrentUserEmail()
-                .orElseThrow(() -> new RuntimeException("Error: User is not authenticated."));
-
 
         List<Order> orders = orderRepository.findAll();
-        return convertToDTO(orders, userEmail);
+
+        return convertToDTO(orders);
+
+    }
+
+    private List<OrderDTO> convertToDTO(List<Order> orders) {
+        return orders.stream()
+                .map(order -> convertToDTO(order, order.getUser().getName()))
+                .collect(Collectors.toList());
     }
 
 

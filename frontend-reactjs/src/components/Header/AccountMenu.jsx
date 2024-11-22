@@ -82,7 +82,7 @@ export default function AccountMenu() {
                 transformOrigin={{horizontal: 'right', vertical: 'top'}}
                 anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
             >
-                <MenuItem onClick={handleClose}>
+                <MenuItem component={Link} to="/user/profile" onClick={handleClose}>
                     <Avatar/> My Profile
                 </MenuItem>
                 <Divider/>

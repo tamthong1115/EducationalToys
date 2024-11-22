@@ -14,6 +14,7 @@ import {Modal, Button} from 'antd'
 import Login from '../components/Header/Login.jsx'
 import LoadingComponent from '../components/Loading/LoadingComponent.jsx'
 import {useNavigate} from 'react-router-dom';
+import {getUserProfile} from "../API/UserAPI.js";
 
 function Cart() {
     const {isAuthenticated, authLoading} = useAuth()
@@ -35,6 +36,11 @@ function Cart() {
         enabled: isAuthenticated
     })
 
+    const {data: user} = useQuery({
+        queryKey: ['user'],
+        queryFn: getUserProfile,
+    });
+
 
     // console.log(`cart`, cart, `cartData`, cartData)
 
@@ -42,7 +48,7 @@ function Cart() {
         if (!isAuthenticated && !authLoading) {
             setIsModalVisible(true)
         } else if (isSuccess) {
-            setCart(cartData)
+            setCart(cartData.sort((a, b) => a.id - b.id));
         }
     }, [isSuccess, cartData, isAuthenticated, authLoading])
 
@@ -51,7 +57,11 @@ function Cart() {
             increaseCartItemQuantity(cartItemId, quantity),
         onSuccess: async () => {
             await queryClient.invalidateQueries({queryKey: ['cart']})
-            toast.success('Cart item quantity updated successfully')
+            // toast.success('Cart item quantity updated successfully')
+        }, onSettled: () => {
+            if (cartData) {
+                setCart(cartData.sort((a, b) => a.id - b.id))
+            }
         },
         onError: (error) => {
             toast.error(
@@ -65,7 +75,11 @@ function Cart() {
             decrementCartQuantity(cartItemId, quantity),
         onSuccess: async () => {
             await queryClient.invalidateQueries({queryKey: ['cart']})
-            toast.success('Cart item quantity updated successfully')
+            // toast.success('Cart item quantity updated successfully')
+        }, onSettled: () => {
+            if (cartData) {
+                setCart(cartData.sort((a, b) => a.id - b.id))
+            }
         },
         onError: (error) => {
             toast.error(
@@ -110,9 +124,17 @@ function Cart() {
     }
 
     const handleCheckout = () => {
-        navigate('/checkout', {state: {cartItemIds: selectedItems}});
-    };
+        if (!user.phone || !user.address) {
+            toast.error('Please update your profile with a valid phone number and address before proceeding to checkout.');
+            return;
+        }
 
+        if (selectedItems.length) {
+            navigate('/checkout', {state: {cartItemIds: selectedItems}});
+        } else {
+            toast.error('Please select at least one item to checkout');
+        }
+    };
     if (isLoading || authLoading || !cart) {
         return LoadingComponent()
     }
@@ -144,12 +166,10 @@ function Cart() {
                             key={product.toyId}
                             className="border p-4 rounded-lg flex items-center justify-between shadow-sm"
                         >
-                            <div className="flex items-center gap-6">
+                            <div className="flex items-center gap-6 w-[40%] truncate">
                                 <input
                                     type="checkbox"
-                                    checked={selectedItems.includes(
-                                        product.id
-                                    )}
+                                    checked={selectedItems.includes(product.id)}
                                     onChange={() =>
                                         handleCheckboxChange(product.id)
                                     }
@@ -169,7 +189,7 @@ function Cart() {
                                 </div>
                             </div>
 
-                            <div className="flex flex-col items-center gap-4">
+                            <div className="flex flex-col items-center gap-4 w-[20%]">
                                 <p className="text-sm font-semibold ">
                                     Quantity
                                 </p>
@@ -205,7 +225,7 @@ function Cart() {
                                 </div>
                             </div>
 
-                            <div className="flex items-center gap-6">
+                            <div className="flex items-center justify-end gap-6 w-[20%]">
                                 <p className="text-black-600 text-lg font-bold">
                                     £
                                     {(product.price * product.quantity).toFixed(

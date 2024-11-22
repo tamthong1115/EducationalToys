@@ -1,7 +1,8 @@
 import axiosInstance from './AxiosInstance'
 
 export const register = async (registerRequestDTO) => {
-    try {        const response = await axiosInstance.post(
+    try {
+        const response = await axiosInstance.post(
             '/auth/register',
             registerRequestDTO
         )
@@ -38,3 +39,15 @@ export const logout = async () => {
         throw new Error(error.response?.data?.message || 'Logout failed')
     }
 }
+
+export const confirmToken = async (token) => {
+    try {
+        // Remove the double quotes from the token
+        const response = await axiosInstance.post('/auth/confirm-token', {
+            token,
+        });
+        return response.data;
+    } catch (error) {
+        throw new Error(error.response?.data?.message || 'Token confirmation failed');
+    }
+};

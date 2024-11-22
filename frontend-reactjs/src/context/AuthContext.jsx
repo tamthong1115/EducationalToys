@@ -20,7 +20,7 @@ export const AuthProvider = ({children}) => {
     const navigate = useNavigate()
 
     const token = localStorage.getItem('token')
-    const {isError, data, isLoading} = useQuery({
+    const {isError, data, isLoading, isSuccess} = useQuery({
         queryKey: ['validateToken'],
         queryFn: () => validateToken(token),
         retry: false,
@@ -39,9 +39,11 @@ export const AuthProvider = ({children}) => {
             if (data && !isError) {
                 setUser(data)
                 setIsAuthenticated(true)
-            } else if (isError) {
+            } else if (isError || !data || !isSuccess) {
                 setUser(null)
                 setIsAuthenticated(false)
+                localStorage.removeItem('token')
+                localStorage.removeItem('user')
             }
             setLoading(false)
         }
