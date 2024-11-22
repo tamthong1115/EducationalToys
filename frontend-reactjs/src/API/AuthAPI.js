@@ -1,12 +1,10 @@
 import axiosInstance from './AxiosInstance'
 
 export const register = async (registerRequestDTO) => {
-    try {
-        const response = await axiosInstance.post(
+    try {        const response = await axiosInstance.post(
             '/auth/register',
             registerRequestDTO
         )
-
 
         return response.data
     } catch (error) {

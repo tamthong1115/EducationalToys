@@ -36,8 +36,9 @@ public class ToyController {
     public ResponseEntity<List<ToyResponseDTO>> searchToys(
             @RequestParam(required = false, defaultValue = "") String q,
             @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "8") int size) {
-        List<ToyResponseDTO> toys = toyService.searchToys(q, PageRequest.of(page - 1, size));
+            @RequestParam(defaultValue = "8") int size,
+            @RequestParam(required = false) List<String> categoryNames) {
+        List<ToyResponseDTO> toys = toyService.searchToys(q, PageRequest.of(page - 1, size), categoryNames);
         return new ResponseEntity<>(toys, HttpStatus.OK);
     }
 }

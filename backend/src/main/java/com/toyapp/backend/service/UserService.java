@@ -28,19 +28,31 @@ public class UserService {
         return userRepository.findByEmail(email).orElse(null);
     }
 
-
-public static Optional<Long> getCurrentUserId() {
-    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-    if (authentication == null || !authentication.isAuthenticated()) {
-        return Optional.empty();
+    public Optional<User> getUserById(Long id) {
+        return userRepository.findById(id);
     }
 
-    Object principal = authentication.getPrincipal();
-    if (principal instanceof User) {
-        return Optional.ofNullable(((User) principal).getId());
-    } else {
-        return Optional.empty();
+    public static Optional<String> getCurrentUserEmail() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return Optional.empty();
+        }
+
+        return Optional.of(authentication.getName());
     }
-}
+
+    public static Optional<Long> getCurrentUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return Optional.empty();
+        }
+
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof User) {
+            return Optional.ofNullable(((User) principal).getId());
+        } else {
+            return Optional.empty();
+        }
+    }
 
 }

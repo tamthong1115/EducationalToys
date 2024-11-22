@@ -30,6 +30,12 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
+    @Column(length = 20)
+    private String phone;
+
+    @Column(length = 255)
+    private String address;
+
     @Column(nullable = false, name = "reward_points")
     private int rewardPoints = 0;
 

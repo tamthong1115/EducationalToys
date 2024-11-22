@@ -1,7 +1,7 @@
 package com.toyapp.backend.controller.user;
 
-import com.toyapp.backend.dto.cart.CartItemDTO;
-import com.toyapp.backend.dto.cart.CreateCartItemDTO;
+import com.toyapp.backend.dto.cart.*;
+import com.toyapp.backend.model.Order;
 import com.toyapp.backend.service.CartItemService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +17,7 @@ public class CartController {
         this.cartItemService = cartItemService;
     }
 
-    @GetMapping("/all")
+    @GetMapping("/items")
     public List<CartItemDTO> getAllCartItems() {
         return cartItemService.getAllCartItems();
     }
@@ -36,6 +36,17 @@ public class CartController {
     public CartItemDTO decreaseCartItemQuantity(@RequestParam Long cartItemId, @RequestParam int quantity) {
         return cartItemService.decreaseQuantity(cartItemId, quantity);
     }
+
+    @PostMapping("/create-payment-intent")
+    public StripePaymentResponseDTO checkout(@RequestBody StripePaymentRequestDTO stripePaymentRequestDTO) {
+        return cartItemService.createPaymentIntent(stripePaymentRequestDTO);
+    }
+
+    @PostMapping("/confirm-payment")
+    public Order confirmPayment(@RequestBody RequestConfirmPaymentDTO requestConfirmPaymentDTO) {
+        return cartItemService.confirmPayment(requestConfirmPaymentDTO);
+    }
+
 
     @DeleteMapping("/remove/{cartItemId}")
     public CartItemDTO deleteCartItem(@PathVariable Long cartItemId) {

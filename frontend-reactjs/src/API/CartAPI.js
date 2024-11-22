@@ -7,10 +7,6 @@ export const createCartItem = async (toyId, quantity) => {
             quantity,
         })
 
-        if(!response.ok) {
-            throw new Error('Failed to create cart item')
-        }
-        
         return response.data
     } catch (error) {
         throw new Error(
@@ -19,13 +15,51 @@ export const createCartItem = async (toyId, quantity) => {
     }
 }
 
+export const createPaymentIntent = async (cartItemIds) => {
+    try {
+        const response = await axiosInstance.post(
+            '/user/cart/create-payment-intent',
+            {
+                cartItemIds,
+            }
+        )
+
+        return response.data
+    } catch (error) {
+        throw new Error(
+            error.response?.data?.message || 'Failed to create payment intent'
+        )
+    }
+}
+
+export const confirmPayment = async (
+    paymentIntentId,
+    userId,
+    totalPrice,
+    cartItemIds
+) => {
+    try {
+        const response = await axiosInstance.post(
+            '/user/cart/confirm-payment',
+            {
+                paymentIntentId,
+                userId,
+                totalPrice,
+                cartItemIds,
+            }
+        )
+
+        return response.data
+    } catch (error) {
+        throw new Error(
+            error.response?.data?.message || 'Failed to confirm payment'
+        )
+    }
+}
+
 export const getCartItems = async () => {
     try {
-        const response = await axiosInstance.get('/user/cart/all')
-
-        if (!response.ok) {
-            throw new Error('Failed to fetch cart items')
-        }
+        const response = await axiosInstance.get('/user/cart/items')
 
         return response.data
     } catch (error) {
@@ -71,7 +105,6 @@ export const decrementCartQuantity = async (cartItemId, quantity) => {
             }
         )
 
-
         return response.data
     } catch (error) {
         throw new Error(
@@ -86,7 +119,7 @@ export const removeCartItem = async (cartItemId) => {
         const response = await axiosInstance.delete(
             `/user/cart/remove/${cartItemId}`
         )
-        
+
         return response.data
     } catch (error) {
         throw new Error(
