@@ -13,12 +13,13 @@ import {UserPages} from './components/UserPages/UserPages'
 import {Profile} from './components/Profile/Profile'
 import Dashboard from './components/Dashboard/Dashboard'
 import ManageProduct from './components/Manage/ManageProduct'
-import ManageStaff from './components/Manage/ManageStaff'
+import ManageStaff from './components/Manage/ManageOrders.jsx'
 import RevenueSummary from './components/Manage/RevenueSummary'
 import Checkout from "./pages/Checkout/Checkout.jsx";
 import Orders from "./pages/Order/Orders.jsx";
 import AdminRoute from "./components/AdminRoute.jsx";
 import {useAuth} from "./context/AuthContext.jsx";
+import ConfirmToken from "./pages/ConfirmToken.jsx";
 
 function App() {
     const {isAuthenticated} = useAuth();
@@ -33,6 +34,15 @@ function App() {
                     </Layout>
                 }
             />
+            <Route
+                path="/confirmToken"
+                element={
+                    <Layout>
+                        <ConfirmToken/>
+                    </Layout>
+                }
+            />
+
             <Route
                 path="/Admin"
                 element={
@@ -132,7 +142,7 @@ function App() {
             )}
             <Route path="/dashboard" element={<AdminRoute element={<Dashboard/>}/>}/>
             <Route path="/manage-product" element={<AdminRoute element={<ManageProduct/>}/>}/>
-            <Route path="/manage-staff" element={<AdminRoute element={<ManageStaff/>}/>}/>
+            <Route path="/manage-orders" element={<AdminRoute element={<ManageStaff/>}/>}/>
             <Route path="/revenue" element={<AdminRoute element={<RevenueSummary/>}/>}/>
         </Routes>
     )

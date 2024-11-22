@@ -5,6 +5,7 @@ import com.toyapp.backend.dto.ExceptionResponse;
 import com.toyapp.backend.dto.auth.JwtResponse;
 import com.toyapp.backend.dto.auth.LoginRequestDTO;
 import com.toyapp.backend.dto.auth.RegisterRequestDTO;
+import com.toyapp.backend.dto.auth.TokenRequestDTO;
 import com.toyapp.backend.exception.CustomException;
 import com.toyapp.backend.model.User;
 import com.toyapp.backend.service.AuthenticationService;
@@ -13,10 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -32,6 +30,12 @@ public class AuthenticationController {
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody RegisterRequestDTO registerRequestDTO) {
         User user = authenticationService.register(registerRequestDTO);
+        return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/confirm-token")
+    public ResponseEntity<User> confirmToken(@RequestBody TokenRequestDTO tokenRequestDTO) {
+        User user = authenticationService.confirmToken(tokenRequestDTO.getToken());
         return ResponseEntity.ok(user);
     }
 

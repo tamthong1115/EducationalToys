@@ -10,8 +10,8 @@ const HeaderDashBoard = ({Bell, Search}) => {
                 return 'Dashboard'
             case '/manage-product':
                 return 'Manage Product'
-            case '/manage-staff':
-                return 'Manage Staff'
+            case '/manage-orders':
+                return 'Manage Orders'
             case '/revenue':
                 return 'Revenue Summary'
             case '/settings':

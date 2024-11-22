@@ -31,14 +31,14 @@ const SideBarAdmin = () => {
                     Manage Product
                 </a>
                 <a
-                    onClick={() => navigate('/manage-staff')}
+                    onClick={() => navigate('/manage-orders')}
                     className={`block py-2 px-4 text-sm ${
-                        location.pathname === '/manage-staff'
+                        location.pathname === '/manage-orders'
                             ? 'bg-blue-100 text-blue-600'
                             : 'text-gray-600 hover:bg-gray-100'
                     } cursor-pointer`}
                 >
-                    Manage Staff
+                    Manage Orders
                 </a>
                 <a
                     onClick={() => navigate('/revenue')}

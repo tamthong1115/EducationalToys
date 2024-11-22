@@ -39,6 +39,9 @@ public class User implements UserDetails {
     @Column(nullable = false, name = "reward_points")
     private int rewardPoints = 0;
 
+    @Column(name = "is_activated")
+    private boolean isActivated = false;
+
     @Column(name = "created_at")
     private Instant createdAt = Instant.now();
 
