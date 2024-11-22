@@ -100,7 +100,7 @@ export const Profile = () => {
                     </div>
                     {/* box-right */}
                     <div className="text-black text-center w-[75%] mt-[100px] text-[24px] font-[700]">
-                        Wellcome to user pages
+                        
                     </div>
                 </div>
             </div>
