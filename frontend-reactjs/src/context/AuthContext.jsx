@@ -35,18 +35,17 @@ export const AuthProvider = ({children}) => {
 
 
     useEffect(() => {
-        if (!isLoading) {
+        if (!isLoading && roles) {
             if (data && !isError) {
                 setUser(data)
                 setIsAuthenticated(true)
             } else if (isError) {
                 setUser(null)
                 setIsAuthenticated(false)
-                navigate('/')
             }
             setLoading(false)
         }
-    }, [data, isError, isLoading, navigate])
+    }, [data, isError, isLoading, navigate, roles])
 
     // console.log(`isAuthenticated: ${isAuthenticated}, data: ${data}, loading: ${loading}, isError: ${isError}`);
 
