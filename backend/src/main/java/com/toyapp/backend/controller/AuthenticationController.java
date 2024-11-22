@@ -45,7 +45,9 @@ public class AuthenticationController {
 
         String token = jwtService.generateToken(user);
 
-        return ResponseEntity.ok(new JwtResponse(token, jwtService.getExpirationTime()));
+        boolean isAdmin = user.getRoles().stream().anyMatch(role -> role.getName().equals("ADMIN"));
+
+        return ResponseEntity.ok(new JwtResponse(token, jwtService.getExpirationTime(), isAdmin));
     }
 
     @PostMapping("/logout")

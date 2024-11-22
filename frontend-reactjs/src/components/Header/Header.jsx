@@ -3,19 +3,21 @@ import {
     // ShopOutlined,
     ShoppingCartOutlined,
 } from '@ant-design/icons'
-import { Button, Dropdown, Form, Input, Modal } from 'antd'
-import { useState } from 'react'
+import {Button, Dropdown, Form, Input, Modal} from 'antd'
+import {useState} from 'react'
 import Login from './Login'
 import Register from './Register'
 import ForgetPassword from './ForgetPassword'
 import FormItem from 'antd/es/form/FormItem'
-import { useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
-import { useAuth } from '../../context/AuthContext.jsx'
+import {useNavigate} from 'react-router-dom'
+import {Link} from 'react-router-dom'
+import {useAuth} from '../../context/AuthContext.jsx'
 import AccountMenu from './AccountMenu.jsx'
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCartShopping} from "@fortawesome/free-solid-svg-icons";
 
 const Header = () => {
-    const { isAuthenticated } = useAuth()
+    const {isAuthenticated} = useAuth()
     const [buttonLogin, setButtonLogin] = useState(false)
     const [buttonRegister, setButtonRegister] = useState(false)
     const [buttonForgotPassword, setButtonForgotPassword] = useState(false)
@@ -49,18 +51,18 @@ const Header = () => {
     }
 
     const categories = [
-        { key: '1', label: 'Toys' },
-        { key: '2', label: 'Tuff Trays' },
-        { key: '3', label: 'Behavioural' },
-        { key: '4', label: 'Sensory' },
-        { key: '5', label: 'Outdoors' },
-        { key: '6', label: 'Sand & Water' },
-        { key: '7', label: 'Strollers' },
-        { key: '8', label: 'Curriculum' },
-        { key: '9', label: 'Adventure' },
-        { key: '10', label: 'School Equipment' },
-        { key: '11', label: 'Furniture & Accessories' },
-        { key: '12', label: 'CLEARANCE' },
+        {key: '1', label: 'Toys'},
+        {key: '2', label: 'Tuff Trays'},
+        {key: '3', label: 'Behavioural'},
+        {key: '4', label: 'Sensory'},
+        {key: '5', label: 'Outdoors'},
+        {key: '6', label: 'Sand & Water'},
+        {key: '7', label: 'Strollers'},
+        {key: '8', label: 'Curriculum'},
+        {key: '9', label: 'Adventure'},
+        {key: '10', label: 'School Equipment'},
+        {key: '11', label: 'Furniture & Accessories'},
+        {key: '12', label: 'CLEARANCE'},
     ]
 
     return (
@@ -73,7 +75,7 @@ const Header = () => {
                     >
                         Educational Toys
                     </Link>
-                    <Dropdown menu={{ items: categories }} trigger={['click']}>
+                    <Dropdown menu={{items: categories}} trigger={['click']}>
                         <Button className="bg-orange-500 text-white px-4 py-2 rounded">
                             All categories
                         </Button>
@@ -87,7 +89,7 @@ const Header = () => {
                         <FormItem name="q">
                             <Input
                                 placeholder="What are you looking for?"
-                                suffix={<SearchOutlined />}
+                                suffix={<SearchOutlined/>}
                             />
                         </FormItem>
                     </Form>
@@ -122,22 +124,23 @@ const Header = () => {
                                     </button>
                                 </>
                             ) : (
-                                <AccountMenu />
+                                <AccountMenu/>
                             )}
                         </div>
 
                         <div
                             onClick={handleCartClick}
-                            className="cursor-pointer"
+                            className="cursor-pointer text-[#000] hover:text-[#757FE2] text-[20px]"
                         >
-                            <ShoppingCartOutlined />
+                            <FontAwesomeIcon icon={faCartShopping}/>
                         </div>
                     </div>
                 </div>
 
                 {/* Navbar */}
                 <nav className="bg-gray-100  ">
-                    <div className="mx-auto flex flex-col gap-10 md:flex-row items-center justify-center space-x-4 py-2">
+                    <div
+                        className="mx-auto flex flex-col gap-10 md:flex-row items-center justify-center space-x-4 py-2">
                         <a
                             href="#"
                             className="text-gray-700 hover:text-purple-700"
@@ -185,7 +188,7 @@ const Header = () => {
                     handleHaveNotAccount={handleRegister}
                 />
             )}
-            {buttonRegister && <Register handleRegister={handleRegister} />}
+            {buttonRegister && <Register handleRegister={handleRegister}/>}
             {buttonForgotPassword && (
                 <ForgetPassword
                     handleForgotPassword={handleForgotPassword}
@@ -199,9 +202,9 @@ const Header = () => {
                 footer={null}
             >
                 {isLoginVisible ? (
-                    <Login handleLogin={() => setIsModalVisible(false)} />
+                    <Login handleLogin={() => setIsModalVisible(false)}/>
                 ) : (
-                    <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div style={{display: 'flex', justifyContent: 'center'}}>
                         <Button
                             type="primary"
                             onClick={() => {

@@ -130,9 +130,10 @@ public class ToyService {
     }
 
     @Transactional
-    public List<ToyResponseDTO> searchToys(String query, Pageable pageable) {
+    public List<ToyResponseDTO> searchToys(String query, Pageable pageable, List<String> categoryNames) {
         query = query.toLowerCase();
         Page<Toy> toys = toyRepository.searchByNameOrDescription(query, pageable);
+
         List<Toy> content = toys.getContent();
         return content.stream()
                 .map(toy -> mapToToyResponseDTO(toy, toy.getImages().stream()
@@ -142,6 +143,8 @@ public class ToyService {
                                 .map(ToyCategory::getCategory)
                                 .collect(Collectors.toList())))
                 .collect(Collectors.toList());
+
+
     }
 
     @Transactional
@@ -238,4 +241,7 @@ public class ToyService {
     }
 
 
+    public void saveToy(Toy toy) {
+        toyRepository.save(toy);
+    }
 }

@@ -12,27 +12,39 @@ import {toast} from 'react-hot-toast'
 import {useAuth} from '../context/AuthContext.jsx'
 import {Modal, Button} from 'antd'
 import Login from '../components/Header/Login.jsx'
+import LoadingComponent from '../components/Loading/LoadingComponent.jsx'
+import {useNavigate} from 'react-router-dom';
 
 function Cart() {
     const {isAuthenticated, authLoading} = useAuth()
     const [cart, setCart] = useState([])
     const [isModalVisible, setIsModalVisible] = useState(false)
     const [isLoginVisible, setIsLoginVisible] = useState(false)
+    const [selectedItems, setSelectedItems] = useState([])
     const queryClient = useQueryClient()
+    const navigate = useNavigate();
 
-    const {data, isLoading, error} = useQuery({
+    const {
+        data: cartData,
+        isSuccess,
+        isLoading,
+        error,
+    } = useQuery({
         queryKey: ['cart'],
         queryFn: getCartItems,
+        enabled: isAuthenticated
     })
+
+
+    // console.log(`cart`, cart, `cartData`, cartData)
 
     useEffect(() => {
         if (!isAuthenticated && !authLoading) {
             setIsModalVisible(true)
-        } else if (data) {
-            setCart(data)
-            // toast.success('Cart items fetched successfully')
+        } else if (isSuccess) {
+            setCart(cartData)
         }
-    }, [data, isAuthenticated, authLoading])
+    }, [isSuccess, cartData, isAuthenticated, authLoading])
 
     const increaseItemQuantityMutation = useMutation({
         mutationFn: ({cartItemId, quantity}) =>
@@ -66,6 +78,7 @@ function Cart() {
         mutationFn: removeCartItem,
         onSuccess: () => {
             toast.success('Cart item removed successfully')
+            queryClient.invalidateQueries({queryKey: ['cart']})
         },
         onError: (error) => {
             toast.error(error.message || 'Failed to remove cart item')
@@ -84,12 +97,24 @@ function Cart() {
         removeItemMutation.mutate(cartItemId)
     }
 
-    const totalPrice = cart.reduce((total, product) => {
-        return total + product.price * product.quantity
-    }, 0)
+    const selectedTotalPrice = cart
+        .filter(product => selectedItems.includes(product.id))
+        .reduce((total, product) => total + product.price * product.quantity, 0);
 
-    if (isLoading) {
-        return <p>Loading...</p>
+    const handleCheckboxChange = (cartItemId) => {
+        setSelectedItems((prevSelectedItems) =>
+            prevSelectedItems.includes(cartItemId)
+                ? prevSelectedItems.filter((id) => id !== cartItemId)
+                : [...prevSelectedItems, cartItemId]
+        )
+    }
+
+    const handleCheckout = () => {
+        navigate('/checkout', {state: {cartItemIds: selectedItems}});
+    };
+
+    if (isLoading || authLoading || !cart) {
+        return LoadingComponent()
     }
 
     if (error) {
@@ -120,6 +145,15 @@ function Cart() {
                             className="border p-4 rounded-lg flex items-center justify-between shadow-sm"
                         >
                             <div className="flex items-center gap-6">
+                                <input
+                                    type="checkbox"
+                                    checked={selectedItems.includes(
+                                        product.id
+                                    )}
+                                    onChange={() =>
+                                        handleCheckboxChange(product.id)
+                                    }
+                                />
                                 <img
                                     src={product.imageUrls[0]}
                                     alt={product.name}
@@ -157,7 +191,7 @@ function Cart() {
                                     >
                                         -
                                     </button>
-                                    <span className="text-lg font-semibold">
+                                    <span className="text-lg font-semibold text-gray-700">
                                         {product.quantity}
                                     </span>
                                     <button
@@ -193,15 +227,17 @@ function Cart() {
                     <div className="flex justify-between items-center mt-6 border-t pt-4">
                         <p className="text-xl font-semibold">Tổng tiền:</p>
                         <p className="text-2xl font-bold text-green-600">
-                            £{totalPrice.toFixed(2)}
+                            £{selectedTotalPrice.toFixed(2) || 0}
                         </p>
                     </div>
 
                     {/* Checkout */}
                     <div className="flex justify-center mt-6">
                         <button
-                            className="bg-green-600 text-white px-8 py-3 rounded-md flex items-center gap-3 font-semibold hover:bg-green-700 transition-colors">
-                            <span>Checkout Security</span>
+                            onClick={handleCheckout}
+                            className="bg-green-600 text-white px-8 py-3 rounded-md flex items-center gap-3 font-semibold hover:bg-green-700 transition-colors"
+                        >
+                            <span>Proceed to Checkout</span>
                         </button>
                     </div>
                 </div>

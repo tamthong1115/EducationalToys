@@ -1,4 +1,4 @@
-import { useNavigate, useLocation } from 'react-router-dom'
+import {useNavigate, useLocation, Link} from 'react-router-dom'
 
 const SideBarAdmin = () => {
     const navigate = useNavigate()
@@ -7,7 +7,7 @@ const SideBarAdmin = () => {
     return (
         <div className="w-64 bg-white shadow-md">
             <div className="p-4">
-                <h1 className="text-2xl font-bold text-blue-600">ToyRent</h1>
+                <Link to={"/"} className="text-2xl font-bold text-blue-600">ToyRent</Link>
             </div>
             <nav className="mt-6">
                 <a

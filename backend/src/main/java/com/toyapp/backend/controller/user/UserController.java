@@ -1,5 +1,6 @@
 package com.toyapp.backend.controller.user;
 
+import com.toyapp.backend.dto.user.UserDTO;
 import com.toyapp.backend.service.AuthenticationService;
 import com.toyapp.backend.service.JwtService;
 import org.springframework.http.HttpStatus;
@@ -31,14 +32,8 @@ public class UserController {
 
 
     @GetMapping("/me")
-    public ResponseEntity<UserDetails> getCurrentUser() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication == null || !authentication.isAuthenticated()) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
-        }
-
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-        return ResponseEntity.ok(userDetails);
+    public ResponseEntity<UserDTO> getCurrentUser() {
+        return ResponseEntity.ok(authenticationService.getCurrentUser());
     }
 
     @PostMapping("/validate-token")

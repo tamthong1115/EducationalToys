@@ -1,7 +1,8 @@
-import { useLocation } from 'react-router-dom'
+import {useLocation} from 'react-router-dom'
+import AccountMenu from "./AccountMenu.jsx";
 
 // eslint-disable-next-line react/prop-types
-const HeaderDashBoard = ({ Bell, Search }) => {
+const HeaderDashBoard = ({Bell, Search}) => {
     const location = useLocation()
     const getTitle = () => {
         switch (location.pathname) {
@@ -31,25 +32,12 @@ const HeaderDashBoard = ({ Bell, Search }) => {
                             placeholder="Search..."
                             className="pl-8 pr-4 py-2 border rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
-                        <Search className="absolute left-2 top-2.5 h-5 w-5 text-gray-400" />
+                        <Search className="absolute left-2 top-2.5 h-5 w-5 text-gray-400"/>
                     </div>
                     <button className="ml-4 p-2 text-gray-400 hover:text-gray-500">
-                        <Bell className="h-6 w-6" />
+                        <Bell className="h-6 w-6"/>
                     </button>
-                    <button className="ml-4 flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">
-                        <span>Happy Toys</span>
-                        <svg
-                            className="ml-1 h-5 w-5 text-gray-400"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                fillRule="evenodd"
-                                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
-                    </button>
+                    <AccountMenu/>
                 </div>
             </div>
         </header>

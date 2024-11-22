@@ -25,15 +25,20 @@ const Login = ({
         mode: 'onBlur',
     });
 
-    const mutation = useMutation( {
+    const mutation = useMutation({
         mutationFn: login,
         onSuccess: async (data) => {
             localStorage.setItem('token', data.token);
             // Refetch or invalidate the query to re-validate the token
-            await queryClient.invalidateQueries({ queryKey: ['validateToken'] });
+            await queryClient.invalidateQueries({queryKey: ['validateToken']});
             handleLogin()
             toast.success('Login successfully');
-            navigate(location?.state?.from?.pathname || '/');
+
+            if (data.isAdmin) {
+                navigate('/dashboard')
+            } else {
+                navigate(location?.state?.from?.pathname || '/');
+            }
         },
         onError: (error) => {
             toast.error(error.message || 'Login failed');
@@ -41,9 +46,9 @@ const Login = ({
     });
 
     const onSubmit = handleSubmit(async (data) => {
-       try {
+        try {
             await mutation.mutateAsync(data);
-       }catch (error) {
+        } catch (error) {
             console.error('Login failed', error);
         }
     });
@@ -103,8 +108,8 @@ const Login = ({
                             You forgot password?
                         </span>
                         <span
-                                 className="hover:italic hover:underline"
-                                 onClick={handleHaveNotAccount}
+                            className="hover:italic hover:underline"
+                            onClick={handleHaveNotAccount}
                         >
                             You have not account?
                         </span>
