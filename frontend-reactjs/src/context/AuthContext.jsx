@@ -39,7 +39,7 @@ export const AuthProvider = ({children}) => {
             if (data && !isError) {
                 setUser(data)
                 setIsAuthenticated(true)
-            } else if (isError || !data || !isSuccess) {
+            } else {
                 setUser(null)
                 setIsAuthenticated(false)
                 localStorage.removeItem('token')
