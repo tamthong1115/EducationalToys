@@ -152,12 +152,12 @@ function Cart() {
                 >
                     Home
                 </Link>
-                <p className="text-3xl font-semibold">Giỏ hàng của bạn</p>
+                <p className="text-3xl font-semibold">Your Cart</p>
             </div>
 
             {!cart.length ? (
                 <p className="text-center text-gray-500 text-lg">
-                    Giỏ hàng hiện tại đang rỗng
+                    Your cart is empty
                 </p>
             ) : (
                 <div className="flex flex-col gap-6">
@@ -245,7 +245,7 @@ function Cart() {
                     ))}
 
                     <div className="flex justify-between items-center mt-6 border-t pt-4">
-                        <p className="text-xl font-semibold">Tổng tiền:</p>
+                        <p className="text-xl font-semibold">Total Price:</p>
                         <p className="text-2xl font-bold text-green-600">
                             £{selectedTotalPrice.toFixed(2) || 0}
                         </p>
